@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Load visualizations via a webmap</title>
+
+<link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="https://js.arcgis.com/4.3/esri/css/main.css">
+
+<script>
+  var dojoConfig = {
+    paths: {
+      app: window.location.href.replace(/\/[^/]+$/, "")
+    }
+  };
+</script>
+
+<script src="https://js.arcgis.com/4.3/"></script>
+
+<script>
+  require([
+    "app/App",
+    "dojo/domReady!"
+  ], function(App) {
+
+    var app = new App();
+    app.run();
+
+  });
+</script>
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+  <div id="info">
+    <div>
+      Paste service url here: <input type="url" id="service-url" value="https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Mexico_demographics/FeatureServer/0">
+      <img id="check" src="img/checkmark.png">
+    </div>
+    <div>
+      Select field(s) to visualize.<br>
+      Field: <select id="field-name"></select><br>
+      Normalization Field: <select id="normalization-field-name"></select>
+    </div>
+    <div>
+      Click to visualize dissimilar neighbors: <button id="generate-renderer-btn">Run</button><img id="spinner" src="img/ajax-loader.gif">
+    </div>
+  </div>
+</body>
+</html>

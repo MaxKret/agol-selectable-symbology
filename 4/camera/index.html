@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+<title>Basic 3D camera</title>
+<style>
+  html, body, #viewDiv {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+#properties{
+  padding: 5px;
+  background-color: white;
+  color: #2e2e2e;
+  width: 160px;
+}
+</style>
+
+<link rel="stylesheet" href="//js.arcgis.com/4.1/esri/css/main.css">
+<script src="//js.arcgis.com/4.1/"></script>
+
+<script>
+require([
+  "esri/Map",
+  "esri/views/SceneView",
+  "dojo/on",
+  "dojo/dom",
+  "dojo/domReady!"
+], function (Map, SceneView, on, dom){
+
+  var map = new Map({
+    basemap: "topo"
+  });
+
+  var view = new SceneView({
+    container: "viewDiv",
+    map: map
+  });
+
+  view.ui.add("properties", "top-right");
+
+  view.watch("camera", function(camera){
+    dom.byId("currentTilt").innerHTML = Math.round(camera.tilt * 100) / 100;
+    dom.byId("currentHeading").innerHTML = Math.round(camera.heading * 100) / 100;
+    dom.byId("currentX").innerHTML = Math.round(camera.position.longitude * 100) / 100;
+    dom.byId("currentY").innerHTML = Math.round(camera.position.latitude * 100) / 100;
+    dom.byId("currentZ").innerHTML = Math.round(camera.position.z * 100) / 100;
+  });
+
+});
+</script>
+</head>
+
+<body>
+  <div id="viewDiv">
+    <div id="properties"><h2>Camera</h2>
+      <b>Heading:</b> <span id='currentHeading'></span><br>
+      <b>Tilt:</b> <span id='currentTilt'></span><br>
+      <b>Longitude:</b> <span id='currentX'></span><br>
+      <b>Latitude:</b> <span id='currentY'></span><br>
+      <b>Elevation:</b> <span id='currentZ'></span><br>
+    </div>
+  </div>
+</body>
+</html>

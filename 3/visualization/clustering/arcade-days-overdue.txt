@@ -1,0 +1,6 @@
+// Days incident closure was overdue
+
+var closed = $feature.Closed_Date;
+var due = $feature.Due_Date;
+var closureDueDiff = DateDiff(closed, due, "days");
+IIF(IsEmpty(closed) || IsEmpty(due), 0, closureDueDiff);

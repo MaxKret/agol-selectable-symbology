@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Axis politics</title>
+
+<link rel="stylesheet" href="https://js.arcgis.com/4.0/esri/css/main.css">
+<script src="https://js.arcgis.com/4.0/"></script>
+
+<style>
+html,
+body,
+#viewDiv {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+</style>
+
+<script>
+require([
+    "esri/Map",
+    "esri/views/SceneView",
+    "esri/layers/FeatureLayer",
+    "esri/renderers/SimpleRenderer",
+    "esri/symbols/ObjectSymbol3DLayer",
+    "esri/symbols/PointSymbol3D",
+    "dojo/domReady!"
+  ],
+  function(
+    Map, SceneView, FeatureLayer, SimpleRenderer, ObjectSymbol3DLayer, PointSymbol3D
+  ) {
+
+    var initCam = {
+      position: {
+        x: -12225019,
+        y: 1071034,
+        z: 1769305,
+        spatialReference: { wkid: 3857 }
+      },
+      heading: 27,
+      tilt: 68
+    };
+
+    var renderer = new SimpleRenderer({
+      symbol: new PointSymbol3D({
+        symbolLayers: [new ObjectSymbol3DLayer({
+          resource: { primitive: "cylinder" }
+        })]
+      }),
+      visualVariables: [
+        {
+          type: "size",
+          field: "MP06024a_B",  // Affiliated with Democratic Party
+          normalizationField: "TOTPOP_CY",
+          axis: "height",
+          valueUnit: "unknown",
+          stops: [
+            { value: 0.15, size: 10000 },
+            { value: 0.25, size: 2000000 }
+          ]
+        }, {
+          type: "size",
+          field: "CONSERVATIVE",  // Identify as conservative
+          normalizationField: "TOTPOP_CY",
+          axis: "width-and-depth",
+          valueUnit: "unknown",
+          stops: [
+            { value: 0.21, size: 10000 },
+            { value: 0.26, size: 100000 }
+          ]
+        }, {
+          type: "color",
+          field: "MP06024a_B",  // Affiliated with Democratic Party
+          normalizationField: "TOTPOP_CY",
+          stops: [
+            { value: 0.15, color: "#FF3030" },
+            { value: 0.20, color: "blue" }
+          ]
+        }
+      ]
+    });
+
+    /*****************************************************************
+     * Create an ArcGISDynamicLayer instance pointing to a Map Service
+     * containing data about pool permits in Southern California.
+     *****************************************************************/
+    var lyr = new FeatureLayer({
+      url: "http://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/us_counties_pov_pol/FeatureServer/0",
+      renderer: renderer,
+      popupTemplate: {
+        title: "{COUNTY}, {STATE}",
+        content: "2015 Population: {TOTPOP_CY}<br>" +
+          "Conservative: {CONSERVATIVE}<br>" +
+          "Liberal: {LIBERAL}<br>" +
+          "Moderate: {MP06029a_B}<hr>" +
+          "Republican: {MP06025a_B}<br>" +
+          "Democrat: {MP06024a_B}<br>" +
+          "Independent/None: {MP06026a_B}"
+      },
+      outFields: ["*"],
+      elevationInfo: {
+        mode: "relative-to-ground"
+      }
+    });
+
+    /*****************************************************************
+     * Add the layer to a map
+     *****************************************************************/
+    var map = new Map({
+      basemap: "gray",
+      layers: [ lyr ]
+    });
+
+    var view = new SceneView({
+      container: "viewDiv",
+      map: map,
+      camera: initCam,
+      viewingMode: "local",
+      clippingArea: {
+        xmax: -7331005,
+        xmin: -14188498,
+        ymax: 6831415,
+        ymin: 2578451,
+        spatialReference: { wkid: 3857 }
+      }
+    });
+  });
+</script>
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+</body>
+
+</html>

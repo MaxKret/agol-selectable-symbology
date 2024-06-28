@@ -1,0 +1,5 @@
+// Incident report age (days)
+
+var closed = $feature.Closed_Date;
+var created = $feature.Created_Date;
+IIF(!IsEmpty(closed) && !IsEmpty(created), DateDiff(closed, created, "days"), 0);
