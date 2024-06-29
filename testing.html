@@ -92,48 +92,59 @@
         }
     </style>
 
-    <script>
-        require([
-            "esri/Map",
-            "esri/views/SceneView",
-            "esri/layers/FeatureLayer",
-            "esri/layers/SceneLayer",
+    <script defer>
+        function testing() {
 
-            "esri/symbols/SimpleMarkerSymbol",
-            "esri/symbols/SimpleLineSymbol",
-            "esri/symbols/WebStyleSymbol",
-            "esri/layers/support/LabelClass",
-
-            "esri/geometry/Extent",
-            "esri/geometry/Polygon",
-
-            "esri/renderers/SimpleRenderer",
-            "esri/renderers/UniqueValueRenderer",
-            "esri/renderers/ClassBreaksRenderer",
-
-            "dojo/on",
-            "dojo/dom",
-            "dojo/domReady!"
-        ], function (Map, SceneView, FeatureLayer, SceneLayer,
-            SimpleMarkerSymbol, SimpleLineSymbol, WebStyleSymbol, LabelClass,
-            Extent, Polygon,
-            SimpleRenderer, UniqueValueRenderer, ClassBreaksRenderer,
-            on, dom) {
-            // Point Cloud 1
-            // Green 4
-            // Esri Purple 1
-
-            function foo() {
-                console.log("bar");
+            function ArcAPI_Code() {
+                console.log("bar3");
+                const mapElement = document.getElementById("arcgis-map-element")
+                console.log(mapElement)
             }
-            // var layerViewsbyDocument = dom.byId("arcgis-map-element").allLayerViews
-            // console.log(layerViewsbyDocument);
 
-            // var layerViewsbyDocument = document.getElementById("arcgis-map-element").allLayerViews
-            // console.log(layerViewsbyDocument);
-        });
+            require([
+                "esri/Map",
+                "esri/views/SceneView",
+                "esri/layers/FeatureLayer",
+                "esri/layers/SceneLayer",
+
+                "esri/symbols/SimpleMarkerSymbol",
+                "esri/symbols/SimpleLineSymbol",
+                "esri/symbols/WebStyleSymbol",
+                "esri/layers/support/LabelClass",
+
+                "esri/geometry/Extent",
+                "esri/geometry/Polygon",
+
+                "esri/renderers/SimpleRenderer",
+                "esri/renderers/UniqueValueRenderer",
+                "esri/renderers/ClassBreaksRenderer"
+            ], function (Map, SceneView, FeatureLayer, SceneLayer,
+                SimpleMarkerSymbol, SimpleLineSymbol, WebStyleSymbol, LabelClass,
+                Extent, Polygon,
+                SimpleRenderer, UniqueValueRenderer, ClassBreaksRenderer) {
+                // Point Cloud 1
+                // Green 4
+                // Esri Purple 1
+
+
+                ArcAPI_Code();
+
+                function ArcAPI_Code_Inside() {
+                    console.log("bar4");
+                    const mapElement = document.getElementById("arcgis-map-element")
+                    console.log(mapElement)
+                }
+
+                ArcAPI_Code_Inside();
+
+                // var layerViewsbyDocument = dom.byId("arcgis-map-element").allLayerViews
+                // console.log(layerViewsbyDocument);
+
+                // var layerViewsbyDocument = document.getElementById("arcgis-map-element").allLayerViews
+                // console.log(layerViewsbyDocument);
+            });
+        }
     </script>
-
 </head>
 
 <body class="claro">
@@ -141,52 +152,58 @@
         <arcgis-map id="arcgis-map-element" item-id="567dca963a894ba3acf457ec3915800c">
 
             <arcgis-legend position="bottom-left" />
-    
+
             <arcgis-layer-list position="bottom-right" />
-    
+
         </arcgis-map>
     </div>
     <div id="basemapToggle-container"></div>
-    <div id="esri-colorinfoslider-container"><div style="padding: 8px;">
-      <div id="title"><h2>Seattle Demographics</h2></div>
-      <div id="attSelection">
-        Attribute:
-        <select id="select-field">
-          <option value="POP18UP_CY" selected>Population 18+</option>
-          <option value="HH_Income_0_35K">Household income 0-$35K</option>
-          <option value="HH_Income_35_75K">Household income $35K - $75K</option>
-          <option value="HH_Income_75_200K">Household income $75K - $200K</option>
-          <option value="HINC200_CY">Household income >$200K</option>
-          <option value="COL_DEG">Pop 25+ earned a college degree</option>
-          <option value="NO_COL_DEG">Pop 25+ with no college degree</option>
-          <option value="HomeValue_0_150K">Homes worth 0-$150K</option>
-          <option value="HomeValue_150_300K">Homes worth $150K - $300K</option>
-          <option value="HomeValue_300K_up">Homes worth >$300K</option>
-          <option value="MALES_CY">Male</option>
-          <option value="FEMALES_CY">Female</option>
-        </select><br><br>
+    <div id="esri-colorinfoslider-container">
+        <div style="padding: 8px;">
+            <div id="title">
+                <h2>Seattle Demographics</h2>
+            </div>
+            <button class="btn" id="test-button" onclick="testing();">
+                Test
+            </button><br><br>
+            <div id="attSelection">
+                Attribute:
+                <select id="select-field">
+                    <option value="POP18UP_CY" selected>Population 18+</option>
+                    <option value="HH_Income_0_35K">Household income 0-$35K</option>
+                    <option value="HH_Income_35_75K">Household income $35K - $75K</option>
+                    <option value="HH_Income_75_200K">Household income $75K - $200K</option>
+                    <option value="HINC200_CY">Household income >$200K</option>
+                    <option value="COL_DEG">Pop 25+ earned a college degree</option>
+                    <option value="NO_COL_DEG">Pop 25+ with no college degree</option>
+                    <option value="HomeValue_0_150K">Homes worth 0-$150K</option>
+                    <option value="HomeValue_150_300K">Homes worth $150K - $300K</option>
+                    <option value="HomeValue_300K_up">Homes worth >$300K</option>
+                    <option value="MALES_CY">Male</option>
+                    <option value="FEMALES_CY">Female</option>
+                </select><br><br>
 
-        Filter by:
-        <select id="select-filter">
-          <option value="" selected></option>
-          <option value="(CITY = 'Seattle')">City of Seattle</option>
-          <option value="(MEDHINC_CY >= 50000 AND MEDHINC_CY <= 100000)">Median HH income $50K - $100K</option>
-          <option value="(MEDVAL_CY >= 500000)">Median Home Value > $500K</option>
-          <option value="(PER_BACH_DEG >= 50)">>50% have a bachelor's degree</option>
-        </select><br><br>
+                Filter by:
+                <select id="select-filter">
+                    <option value="" selected></option>
+                    <option value="(MEDHINC_CY >= 50000 AND MEDHINC_CY <= 100000)">Median HH income $50K - $100K
+                    </option>
+                </select><br><br>
 
-        <button class="btn" id="extent-filter">Filter by map extent</button><button class="btn" id="clear-extent-filter">Clear extent filter</button><br><br>
+                <button class="btn" id="extent-filter">Filter by map extent</button><button class="btn"
+                    id="clear-extent-filter">Clear extent filter</button><br><br>
 
-        Theme:
-        <select id="color-renderer-theme" style="margin-right:1rem;">
-          <option value="high-to-low" selected>High to low</option>
-          <option value="above-and-below">Above and below</option>
-          <option value="centered-on">Centered on</option>
-          <option value="extremes">Extremes</option>
-        </select>
-      </div></div>
-      <div id="esri-colorinfoslider"><img src="img/busy-indicator.gif" id="spinner"></div>
+                Theme:
+                <select id="color-renderer-theme" style="margin-right:1rem;">
+                    <option value="high-to-low" selected>High to low</option>
+                    <option value="above-and-below">Above and below</option>
+                    <option value="centered-on">Centered on</option>
+                    <option value="extremes">Extremes</option>
+                </select>
+            </div>
+        </div>
+        <div id="esri-colorinfoslider"><img src="img/busy-indicator.gif" id="spinner"></div>
     </div>
-  </body>
+</body>
 
 </html>
