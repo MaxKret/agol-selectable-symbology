@@ -178,15 +178,8 @@
         map.addLayer(lyr);
         //Configure InfoTemplate on FeatureLayer
 
-        var content = "Total Population: {TOTPOP_CY}<br>"
-        + "Pop 18+: {POP18UP_CY}<br>"
-        + "Male: {MALES_CY}<br>"
-        + "Female: {FEMALES_CY}<br>"
-        + "College Degree: {COL_DEG}<br>"
-        + "No College Degree: {NO_COL_DEG}<br>"
-        + "Median household income: {MEDHINC_CY}<br>"
-        + "Median home value: {MEDVAL_CY}<br>";
-        var title = "Key Demographics: {FID_Block_Group}";
+        var content = "mean: {HSI_mean_5}<br>";
+        var title = "Key Demographics: {CELLID}";
 
         lyr.setInfoTemplate(new PopupTemplate({
           title: title,
@@ -415,27 +408,13 @@
       <div id="attSelection">
         Attribute:
         <select id="select-field">
-          <option value="POP18UP_CY" selected>Population 18+</option>
-          <option value="HH_Income_0_35K">Household income 0-$35K</option>
-          <option value="HH_Income_35_75K">Household income $35K - $75K</option>
-          <option value="HH_Income_75_200K">Household income $75K - $200K</option>
-          <option value="HINC200_CY">Household income >$200K</option>
-          <option value="COL_DEG">Pop 25+ earned a college degree</option>
-          <option value="NO_COL_DEG">Pop 25+ with no college degree</option>
-          <option value="HomeValue_0_150K">Homes worth 0-$150K</option>
-          <option value="HomeValue_150_300K">Homes worth $150K - $300K</option>
-          <option value="HomeValue_300K_up">Homes worth >$300K</option>
-          <option value="MALES_CY">Male</option>
-          <option value="FEMALES_CY">Female</option>
+          <option value="HSI_mean_5" selected>HSI_mean_5</option>
         </select><br><br>
 
         Filter by:
         <select id="select-filter">
           <option value="" selected></option>
-          <option value="(CITY = 'Seattle')">City of Seattle</option>
-          <option value="(MEDHINC_CY >= 50000 AND MEDHINC_CY <= 100000)">Median HH income $50K - $100K</option>
-          <option value="(MEDVAL_CY >= 500000)">Median Home Value > $500K</option>
-          <option value="(PER_BACH_DEG >= 50)">>50% have a bachelor's degree</option>
+          <option value="(HSI_mean_5 >= 0 AND HSI_mean_5 <= 0.5)">HSI_mean_5 0 - 0.5</option>
         </select><br><br>
 
         <button class="btn" id="extent-filter">Filter by map extent</button><button class="btn" id="clear-extent-filter">Clear extent filter</button><br><br>
