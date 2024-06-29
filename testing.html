@@ -96,9 +96,38 @@
         function testing() {
 
             function ArcAPI_Code() {
-                console.log("bar3");
-                const mapElement = document.getElementById("arcgis-map-element")
-                console.log(mapElement)
+                console.log("bar1");
+                const mapView = document.getElementById("arcgis-map-element")
+                const allLayerViews = mapView.allLayerViews.items
+                const allLayerViewLayers = allLayerViews.map(layerView => layerView.layer)
+                // console.log("allLayerViewLayers")
+                // console.log(allLayerViewLayers)
+                const mapViewMap = mapView.map
+                const allLayers = mapViewMap.allLayers.items
+                // console.log("allLayers")
+                // console.log(allLayers)
+
+                s07g511_mean_5_lyr = allLayers.filter(l => l.title == "S07_G511_03_07_mean")[0];
+                console.log("s07g511_mean_5_lyr")
+                console.log(s07g511_mean_5_lyr)
+
+                let mean5yrRenderer = {
+                    type: "simple",  // autocasts as new SimpleRenderer()
+                    symbol: { type: "simple-fill", outline: { color: [0, 0, 0, 0], width: 0 } },  // autocasts as new SimpleFillSymbol()
+                    visualVariables: [{
+                        type: "color",
+                        field: "HSI_mean_5",
+                        stops: [
+                            { value: 0.00, color: "#ff2b18ff", label: "0.0" },
+                            { value: 0.25, color: "#f5c926ff" },
+                            { value: 0.50, color: "#7dfd94ff" },
+                            { value: 0.75, color: "#1cc2fdff" },
+                            { value: 1.00, color: "#5813fcff", label: "1.0" }
+                        ]
+                    }]
+                };
+
+                // s07g511_mean_5_lyr.renderer = mean5yrRenderer;
             }
 
             require([
@@ -117,31 +146,90 @@
 
                 "esri/renderers/SimpleRenderer",
                 "esri/renderers/UniqueValueRenderer",
-                "esri/renderers/ClassBreaksRenderer"
+                "esri/renderers/ClassBreaksRenderer",
+
+                "esri/smartMapping/symbology/color",
+                "esri/smartMapping/symbology/support/colorRamps"
             ], function (Map, SceneView, FeatureLayer, SceneLayer,
                 SimpleMarkerSymbol, SimpleLineSymbol, WebStyleSymbol, LabelClass,
                 Extent, Polygon,
-                SimpleRenderer, UniqueValueRenderer, ClassBreaksRenderer) {
+                SimpleRenderer, UniqueValueRenderer, ClassBreaksRenderer,
+                colorSchemes, colorRamps) {
                 // Point Cloud 1
                 // Green 4
                 // Esri Purple 1
 
-
                 ArcAPI_Code();
 
+                console.log("bar2");
+                const mapView = document.getElementById("arcgis-map-element")
+                const allLayerViews = mapView.allLayerViews.items
+                const allLayerViewLayers = allLayerViews.map(layerView => layerView.layer)
+                // console.log("allLayerViewLayers")
+                // console.log(allLayerViewLayers)
+                const mapViewMap = mapView.map
+                const allLayers = mapViewMap.allLayers.items
+                // console.log("allLayers")
+                // console.log(allLayers)
+
+                s07g511_mean_5_lyr = allLayers.filter(l => l.title == "S07_G511_03_07_mean")[0];
+                console.log("s07g511_mean_5_lyr")
+                console.log(s07g511_mean_5_lyr)
+
+                let mean5yrRenderer = {
+                    type: "simple",  // autocasts as new SimpleRenderer()
+                    symbol: { type: "simple-fill", outline: { color: [0, 0, 0, 0], width: 0 } },  // autocasts as new SimpleFillSymbol()
+                    visualVariables: [{
+                        type: "color",
+                        field: "HSI_mean_5",
+                        stops: [
+                            { value: 0.00, color: "#ff2b18ff", label: "0.0" },
+                            { value: 0.25, color: "#f5c926ff" },
+                            { value: 0.50, color: "#7dfd94ff" },
+                            { value: 0.75, color: "#1cc2fdff" },
+                            { value: 1.00, color: "#5813fcff", label: "1.0" }
+                        ]
+                    }]
+                };
+
+                s07g511_mean_5_lyr.renderer = mean5yrRenderer;
+
                 function ArcAPI_Code_Inside() {
-                    console.log("bar4");
-                    const mapElement = document.getElementById("arcgis-map-element")
-                    console.log(mapElement)
+                    console.log("bar3");
+                    const mapView = document.getElementById("arcgis-map-element")
+                    const allLayerViews = mapView.allLayerViews.items
+                    const allLayerViewLayers = allLayerViews.map(layerView => layerView.layer)
+                    // console.log("allLayerViewLayers")
+                    // console.log(allLayerViewLayers)
+                    const mapViewMap = mapView.map
+                    const allLayers = mapViewMap.allLayers.items
+                    // console.log("allLayers")
+                    // console.log(allLayers)
+
+                    s07g511_mean_5_lyr = allLayers.filter(l => l.title == "S07_G511_03_07_mean")[0];
+                    console.log("s07g511_mean_5_lyr")
+                    console.log(s07g511_mean_5_lyr)
+
+                    let mean5yrRenderer = {
+                        type: "simple",  // autocasts as new SimpleRenderer()
+                        symbol: { type: "simple-fill", outline: { color: [0, 0, 0, 0], width: 0 } },  // autocasts as new SimpleFillSymbol()
+                        visualVariables: [{
+                            type: "color",
+                            field: "HSI_mean_5",
+                            stops: [
+                                { value: 0.00, color: "#ff2b18ff", label: "0.0" },
+                                { value: 0.25, color: "#f5c926ff" },
+                                { value: 0.50, color: "#7dfd94ff" },
+                                { value: 0.75, color: "#1cc2fdff" },
+                                { value: 1.00, color: "#5813fcff", label: "1.0" }
+                            ]
+                        }]
+                    };
+
+                    // s07g511_mean_5_lyr.renderer = mean5yrRenderer;
                 }
 
                 ArcAPI_Code_Inside();
-
-                // var layerViewsbyDocument = dom.byId("arcgis-map-element").allLayerViews
-                // console.log(layerViewsbyDocument);
-
-                // var layerViewsbyDocument = document.getElementById("arcgis-map-element").allLayerViews
-                // console.log(layerViewsbyDocument);
             });
         }
     </script>
