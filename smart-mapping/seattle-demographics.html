@@ -110,7 +110,7 @@
       var qt = new QueryTask(url);
 
       var map = new Map("esri-map-container", {
-        basemap: "imagery",
+        basemap: "gray",
         center: [-122.324424, 47.599179],
         zoom: 13
       });
@@ -118,7 +118,7 @@
       var busySpinner = dom.byId("spinner");
 
       var bt = new BasemapToggle({
-        basemap: "imagery",
+        basemap: "dark-gray",
         map: map
       }, "basemapToggle-container");
       bt.startup();
