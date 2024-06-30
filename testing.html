@@ -267,62 +267,6 @@
                 };
 
                 s07g511_mean_5_lyr.renderer = stdev5yrRenderer;
-
-                function ArcAPI_Code_Inside() {
-                    console.log("bar3");
-                    const mapView = document.getElementById("arcgis-map-element")
-                    const allLayerViews = mapView.allLayerViews.items
-                    const allLayerViewLayers = allLayerViews.map(layerView => layerView.layer)
-                    // console.log("allLayerViewLayers")
-                    // console.log(allLayerViewLayers)
-                    const mapViewMap = mapView.map
-                    const allLayers = mapViewMap.allLayers.items
-                    // console.log("allLayers")
-                    // console.log(allLayers)
-
-                    const s07g511_mean_5_lyr = allLayers.filter(l => l.title == "S07_G511_03_07_mean")[0];
-                    console.log("s07g511_mean_5_lyr")
-                    console.log(s07g511_mean_5_lyr)
-
-                    let mean5yrRenderer = {
-                        type: "simple",  // autocasts as new SimpleRenderer()
-                        symbol: { type: "simple-fill", outline: { color: [0, 0, 0, 0], width: 0 } },  // autocasts as new SimpleFillSymbol()
-                        visualVariables: [{
-                            type: "color",
-                            field: "HSI_mean_5",
-                            stops: [ // Full Spectrum - Bright
-                                { value: (0.00 * 1), color: "#FE230AFF", label: "0.0" },
-                                { value: (0.33 * 1), color: "#F2FE1E" },
-                                { value: (0.66 * 1), color: "#16FDFF" },
-                                { value: (1.00 * 1), color: "#5C09FC", label: "1.0" }
-                            ]
-                        }]
-                    };
-
-                    let stdev5yrRenderer = {
-                        type: "simple",  // autocasts as new SimpleRenderer()
-                        symbol: { type: "simple-fill", outline: { color: [0, 0, 0, 0], width: 0 } },  // autocasts as new SimpleFillSymbol()
-                        visualVariables: [{
-                            type: "color",
-                            field: "HSI_stdev_5",
-                            stops: [ // Yellow-Green (Continuous)
-                                { value: (0.000 * 0.4419438625465172), color: "#004529FF", label: "0.00" },
-                                { value: (0.125 * 0.4419438625465172), color: "#006837FF" },
-                                { value: (0.250 * 0.4419438625465172), color: "#238443FF" },
-                                { value: (0.375 * 0.4419438625465172), color: "#41AB5DFF" },
-                                { value: (0.500 * 0.4419438625465172), color: "#78C679FF" },
-                                { value: (0.625 * 0.4419438625465172), color: "#ADDD8EFF" },
-                                { value: (0.750 * 0.4419438625465172), color: "#D9F0A3FF" },
-                                { value: (0.875 * 0.4419438625465172), color: "#F7FCB9FF" },
-                                { value: (1.000 * 0.4419438625465172), color: "#FFFFE5FF", label: "0.44" }
-                            ]
-                        }]
-                    };
-
-                    // s07g511_mean_5_lyr.renderer = mean5yrRenderer;
-                }
-
-                ArcAPI_Code_Inside();
             });
         }
     </script>
