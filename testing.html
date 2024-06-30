@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <title>ArcGIS Maps SDK for JavaScript Tutorials: Display a map using arcgis/map-components</title>
+    <title>Testing Page</title>
     <link rel="stylesheet" href="https://js.arcgis.com/4.30/esri/themes/light/main.css">
     <link rel="stylesheet" href="//js.arcgis.com/3.17/dijit/themes/claro/claro.css">
     <link rel="stylesheet" href="//js.arcgis.com/3.17/esri/css/esri.css">
@@ -107,25 +107,47 @@
                 // console.log("allLayers")
                 // console.log(allLayers)
 
-                s07g511_mean_5_lyr = allLayers.filter(l => l.title == "S07_G511_03_07_mean")[0];
+                const s07g511_mean_5_lyr = allLayers.filter(l => l.title == "S07_G511_03_07_mean")[0];
                 console.log("s07g511_mean_5_lyr")
                 console.log(s07g511_mean_5_lyr)
 
+                // Mean
                 // stops: [ // Point Cloud 1
-                //     { value: 0.00, color: "#ff2b18ff", label: "0.0" },
-                //     { value: 0.25, color: "#f5c926ff" },
-                //     { value: 0.50, color: "#7dfd94ff" },
-                //     { value: 0.75, color: "#1cc2fdff" },
-                //     { value: 1.00, color: "#5813fcff", label: "1.0" }
+                //     { value: (0.00 * 1), color: "#ff2b18ff", label: "0.0" },
+                //     { value: (0.25 * 1), color: "#f5c926ff" },
+                //     { value: (0.50 * 1), color: "#7dfd94ff" },
+                //     { value: (0.75 * 1), color: "#1cc2fdff" },
+                //     { value: (1.00 * 1), color: "#5813fcff", label: "1.0" }
                 // ]
-
                 // stops: [ // Full Spectrum - Bright
-                //     { value: 0.00, color: "#FE230AFF", label: "0.0" },
-                //     { value: 0.33, color: "#F2FE1E" },
-                //     { value: 0.66, color: "#16FDFF" },
-                //     { value: 1.00, color: "#5C09FC", label: "1.0" }
+                //     { value: (0.00 * 1), color: "#FE230AFF", label: "0.0" },
+                //     { value: (0.33 * 1), color: "#F2FE1E" },
+                //     { value: (0.66 * 1), color: "#16FDFF" },
+                //     { value: (1.00 * 1), color: "#5C09FC", label: "1.0" }
                 // ]
 
+                // Standard Deviations
+                // stops: [ // Green 4
+                //     { value: (0.00 * 0.4419438625465172), color: "#006837ff", label: "0.00" },
+                //     { value: (0.25 * 0.4419438625465172), color: "#31a354ff" },
+                //     { value: (0.50 * 0.4419438625465172), color: "#78c679ff" },
+                //     { value: (0.75 * 0.4419438625465172), color: "#c2e699ff" },
+                //     { value: (1.00 * 0.4419438625465172), color: "#ffffccff", label: "0.44" }
+                // ]
+                // stops: [ // Yellow-Green (Continuous)
+                //     { value: (0.000 * 0.4419438625465172), color: "#004529FF", label: "0.00" },
+                //     { value: (0.125 * 0.4419438625465172), color: "#006837FF" },
+                //     { value: (0.250 * 0.4419438625465172), color: "#238443FF" },
+                //     { value: (0.375 * 0.4419438625465172), color: "#41AB5DFF" },
+                //     { value: (0.500 * 0.4419438625465172), color: "#78C679FF" },
+                //     { value: (0.625 * 0.4419438625465172), color: "#ADDD8EFF" },
+                //     { value: (0.750 * 0.4419438625465172), color: "#D9F0A3FF" },
+                //     { value: (0.875 * 0.4419438625465172), color: "#F7FCB9FF" },
+                //     { value: (1.000 * 0.4419438625465172), color: "#FFFFE5FF", label: "0.44" }
+                // ]
+
+                // Years Below 0.2 Threshold
+                // yrs_LtE_0_2_5 / 5
 
                 let mean5yrRenderer = {
                     type: "simple",  // autocasts as new SimpleRenderer()
@@ -133,12 +155,31 @@
                     visualVariables: [{
                         type: "color",
                         field: "HSI_mean_5",
-                        stops: [
-                            { value: 0.00, color: "#ff2b18ff", label: "0.0" },
-                            { value: 0.25, color: "#f5c926ff" },
-                            { value: 0.50, color: "#7dfd94ff" },
-                            { value: 0.75, color: "#1cc2fdff" },
-                            { value: 1.00, color: "#5813fcff", label: "1.0" }
+                        stops: [ // Full Spectrum - Bright
+                            { value: (0.00 * 1), color: "#FE230AFF", label: "0.0" },
+                            { value: (0.33 * 1), color: "#F2FE1E" },
+                            { value: (0.66 * 1), color: "#16FDFF" },
+                            { value: (1.00 * 1), color: "#5C09FC", label: "1.0" }
+                        ]
+                    }]
+                };
+
+                let stdev5yrRenderer = {
+                    type: "simple",  // autocasts as new SimpleRenderer()
+                    symbol: { type: "simple-fill", outline: { color: [0, 0, 0, 0], width: 0 } },  // autocasts as new SimpleFillSymbol()
+                    visualVariables: [{
+                        type: "color",
+                        field: "HSI_stdev_5",
+                        stops: [ // Yellow-Green (Continuous)
+                            { value: (0.000 * 0.4419438625465172), color: "#004529FF", label: "0.00" },
+                            { value: (0.125 * 0.4419438625465172), color: "#006837FF" },
+                            { value: (0.250 * 0.4419438625465172), color: "#238443FF" },
+                            { value: (0.375 * 0.4419438625465172), color: "#41AB5DFF" },
+                            { value: (0.500 * 0.4419438625465172), color: "#78C679FF" },
+                            { value: (0.625 * 0.4419438625465172), color: "#ADDD8EFF" },
+                            { value: (0.750 * 0.4419438625465172), color: "#D9F0A3FF" },
+                            { value: (0.875 * 0.4419438625465172), color: "#F7FCB9FF" },
+                            { value: (1.000 * 0.4419438625465172), color: "#FFFFE5FF", label: "0.44" }
                         ]
                     }]
                 };
@@ -171,8 +212,6 @@
                 Extent, Polygon,
                 SimpleRenderer, UniqueValueRenderer, ClassBreaksRenderer,
                 colorSchemes, colorRamps) {
-                // Point Cloud 1
-                // Green 4
                 // Esri Purple 1
 
                 ArcAPI_Code();
@@ -188,7 +227,7 @@
                 // console.log("allLayers")
                 // console.log(allLayers)
 
-                s07g511_mean_5_lyr = allLayers.filter(l => l.title == "S07_G511_03_07_mean")[0];
+                const s07g511_mean_5_lyr = allLayers.filter(l => l.title == "S07_G511_03_07_mean")[0];
                 console.log("s07g511_mean_5_lyr")
                 console.log(s07g511_mean_5_lyr)
 
@@ -199,15 +238,35 @@
                         type: "color",
                         field: "HSI_mean_5",
                         stops: [ // Full Spectrum - Bright
-                            { value: 0.00, color: "#FE230AFF", label: "0.0" },
-                            { value: 0.33, color: "#F2FE1E" },
-                            { value: 0.66, color: "#16FDFF" },
-                            { value: 1.00, color: "#5C09FC", label: "1.0" }
+                            { value: (0.00 * 1), color: "#FE230AFF", label: "0.0" },
+                            { value: (0.33 * 1), color: "#F2FE1E" },
+                            { value: (0.66 * 1), color: "#16FDFF" },
+                            { value: (1.00 * 1), color: "#5C09FC", label: "1.0" }
                         ]
                     }]
                 };
 
-                s07g511_mean_5_lyr.renderer = mean5yrRenderer;
+                let stdev5yrRenderer = {
+                    type: "simple",  // autocasts as new SimpleRenderer()
+                    symbol: { type: "simple-fill", outline: { color: [0, 0, 0, 0], width: 0 } },  // autocasts as new SimpleFillSymbol()
+                    visualVariables: [{
+                        type: "color",
+                        field: "HSI_stdev_5",
+                        stops: [ // Yellow-Green (Continuous)
+                            { value: (0.000 * 0.4419438625465172), color: "#004529FF", label: "0.00" },
+                            { value: (0.125 * 0.4419438625465172), color: "#006837FF" },
+                            { value: (0.250 * 0.4419438625465172), color: "#238443FF" },
+                            { value: (0.375 * 0.4419438625465172), color: "#41AB5DFF" },
+                            { value: (0.500 * 0.4419438625465172), color: "#78C679FF" },
+                            { value: (0.625 * 0.4419438625465172), color: "#ADDD8EFF" },
+                            { value: (0.750 * 0.4419438625465172), color: "#D9F0A3FF" },
+                            { value: (0.875 * 0.4419438625465172), color: "#F7FCB9FF" },
+                            { value: (1.000 * 0.4419438625465172), color: "#FFFFE5FF", label: "0.44" }
+                        ]
+                    }]
+                };
+
+                s07g511_mean_5_lyr.renderer = stdev5yrRenderer;
 
                 function ArcAPI_Code_Inside() {
                     console.log("bar3");
@@ -221,7 +280,7 @@
                     // console.log("allLayers")
                     // console.log(allLayers)
 
-                    s07g511_mean_5_lyr = allLayers.filter(l => l.title == "S07_G511_03_07_mean")[0];
+                    const s07g511_mean_5_lyr = allLayers.filter(l => l.title == "S07_G511_03_07_mean")[0];
                     console.log("s07g511_mean_5_lyr")
                     console.log(s07g511_mean_5_lyr)
 
@@ -231,12 +290,31 @@
                         visualVariables: [{
                             type: "color",
                             field: "HSI_mean_5",
-                            stops: [
-                                { value: 0.00, color: "#ff2b18ff", label: "0.0" },
-                                { value: 0.25, color: "#f5c926ff" },
-                                { value: 0.50, color: "#7dfd94ff" },
-                                { value: 0.75, color: "#1cc2fdff" },
-                                { value: 1.00, color: "#5813fcff", label: "1.0" }
+                            stops: [ // Full Spectrum - Bright
+                                { value: (0.00 * 1), color: "#FE230AFF", label: "0.0" },
+                                { value: (0.33 * 1), color: "#F2FE1E" },
+                                { value: (0.66 * 1), color: "#16FDFF" },
+                                { value: (1.00 * 1), color: "#5C09FC", label: "1.0" }
+                            ]
+                        }]
+                    };
+
+                    let stdev5yrRenderer = {
+                        type: "simple",  // autocasts as new SimpleRenderer()
+                        symbol: { type: "simple-fill", outline: { color: [0, 0, 0, 0], width: 0 } },  // autocasts as new SimpleFillSymbol()
+                        visualVariables: [{
+                            type: "color",
+                            field: "HSI_stdev_5",
+                            stops: [ // Yellow-Green (Continuous)
+                                { value: (0.000 * 0.4419438625465172), color: "#004529FF", label: "0.00" },
+                                { value: (0.125 * 0.4419438625465172), color: "#006837FF" },
+                                { value: (0.250 * 0.4419438625465172), color: "#238443FF" },
+                                { value: (0.375 * 0.4419438625465172), color: "#41AB5DFF" },
+                                { value: (0.500 * 0.4419438625465172), color: "#78C679FF" },
+                                { value: (0.625 * 0.4419438625465172), color: "#ADDD8EFF" },
+                                { value: (0.750 * 0.4419438625465172), color: "#D9F0A3FF" },
+                                { value: (0.875 * 0.4419438625465172), color: "#F7FCB9FF" },
+                                { value: (1.000 * 0.4419438625465172), color: "#FFFFE5FF", label: "0.44" }
                             ]
                         }]
                     };
@@ -270,38 +348,26 @@
                 Test
             </button><br><br>
             <div id="attSelection">
-                Attribute:
-                <select id="select-field">
-                    <option value="POP18UP_CY" selected>Population 18+</option>
-                    <option value="HH_Income_0_35K">Household income 0-$35K</option>
-                    <option value="HH_Income_35_75K">Household income $35K - $75K</option>
-                    <option value="HH_Income_75_200K">Household income $75K - $200K</option>
-                    <option value="HINC200_CY">Household income >$200K</option>
-                    <option value="COL_DEG">Pop 25+ earned a college degree</option>
-                    <option value="NO_COL_DEG">Pop 25+ with no college degree</option>
-                    <option value="HomeValue_0_150K">Homes worth 0-$150K</option>
-                    <option value="HomeValue_150_300K">Homes worth $150K - $300K</option>
-                    <option value="HomeValue_300K_up">Homes worth >$300K</option>
-                    <option value="MALES_CY">Male</option>
-                    <option value="FEMALES_CY">Female</option>
+                Situation and Group:
+                <select id="select-situation-group">
+                    <option value="S07_G511" selected>S07 G511</option>
+                    <option value="S08_G511">S08 G511</option>
+                    <option value="S07_G520">S07 G520</option>
+                    <option value="S08_G520">S08 G520</option>
                 </select><br><br>
 
-                Filter by:
-                <select id="select-filter">
-                    <option value="" selected></option>
-                    <option value="(MEDHINC_CY >= 50000 AND MEDHINC_CY <= 100000)">Median HH income $50K - $100K
-                    </option>
+                Year Span:
+                <select id="select-year">
+                    <option value="5" selected>03-07</option>
+                    <option value="10">03-12</option>
+                    <option value="15">03-17</option>
                 </select><br><br>
 
-                <button class="btn" id="extent-filter">Filter by map extent</button><button class="btn"
-                    id="clear-extent-filter">Clear extent filter</button><br><br>
-
-                Theme:
-                <select id="color-renderer-theme" style="margin-right:1rem;">
-                    <option value="high-to-low" selected>High to low</option>
-                    <option value="above-and-below">Above and below</option>
-                    <option value="centered-on">Centered on</option>
-                    <option value="extremes">Extremes</option>
+                Statistic:
+                <select id="select-statistic">
+                    <option value="mean" selected>Mean</option>
+                    <option value="stdev">Standard Deviation</option>
+                    <option value="yrs_LtE_0_2">Years Below 0.2 Threshold</option>
                 </select>
             </div>
         </div>
