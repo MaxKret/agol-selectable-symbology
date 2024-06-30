@@ -1,36 +1,322 @@
+<!DOCTYPE html>
 <html>
+
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
-  <title>ArcGIS Maps SDK for JavaScript Tutorials: Display a map using arcgis/map-components</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>Testing Page</title>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.30/esri/themes/light/main.css">
+    <link rel="stylesheet" href="//js.arcgis.com/3.17/dijit/themes/claro/claro.css">
+    <link rel="stylesheet" href="//js.arcgis.com/3.17/esri/css/esri.css">
+    <script src="https://js.arcgis.com/4.30/"></script>
+    <script type="module" src="https://js.arcgis.com/map-components/4.30/arcgis-map-components.esm.js"></script>
 
-  <style>
-    html,
-    body{
-      padding: 0;
-      margin: 0;
-      height: 100%;
-      width: 100%;
-    }
-  </style>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
 
-  <!-- Load Map Components from CDN-->
-  <link rel="stylesheet" href="https://js.arcgis.com/4.30/esri/themes/light/main.css">
-  <script src="https://js.arcgis.com/4.30/"></script>
-  <script type="module" src="https://js.arcgis.com/map-components/4.30/arcgis-map-components.esm.js"></script>
+        #esri-map-container {
+            height: 100%;
+            width: -webkit-fill-available;
+            left: 300px;
+            position: absolute;
+        }
 
+        #esri-colorinfoslider-container {
+            position: absolute;
+            z-index: 2;
+            bottom: 0;
+            left: 0;
+            background-color: #FFFCD4;
+            color: #6B3B64;
+            height: 100%;
+            width: 300px;
+            border-top-right-radius: 8px;
+            overflow-x: hidden;
+        }
+
+        #basemapToggle-container {
+            z-index: 4;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+
+        #spinner {
+            visibility: hidden;
+            position: relative;
+            z-index: 98;
+            left: 90px;
+            bottom: 250px;
+        }
+
+        .btn {
+            background: #3498db;
+            background-image: -webkit-linear-gradient(top, #6B3B64, #6B3B64);
+            background-image: -moz-linear-gradient(top, #6B3B64, #6B3B64);
+            background-image: -ms-linear-gradient(top, #6B3B64, #6B3B64);
+            background-image: -o-linear-gradient(top, #6B3B64, #6B3B64);
+            background-image: linear-gradient(to bottom, #6B3B64, #6B3B64);
+            -webkit-border-radius: 28;
+            -moz-border-radius: 28;
+            border-radius: 28px;
+            font-family: Arial;
+            color: #ffffff;
+            font-size: 14px;
+            padding: 3px 7px 3px 7px;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: #3cb0fd;
+            background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+            background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+            background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+            background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+            background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+            text-decoration: none;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        #esri_dijit_RendererSlider_0 {
+            background-color: #FFFCD4;
+        }
+    </style>
+
+    <script defer>
+        function testing() {
+
+            function ArcAPI_Code() {
+                console.log("bar1");
+                const mapView = document.getElementById("arcgis-map-element")
+                const allLayerViews = mapView.allLayerViews.items
+                const allLayerViewLayers = allLayerViews.map(layerView => layerView.layer)
+                // console.log("allLayerViewLayers")
+                // console.log(allLayerViewLayers)
+                const mapViewMap = mapView.map
+                const allLayers = mapViewMap.allLayers.items
+                // console.log("allLayers")
+                // console.log(allLayers)
+
+                const s07g511_mean_5_lyr = allLayers.filter(l => l.title == "S07_G511_03_07_mean")[0];
+                console.log("s07g511_mean_5_lyr")
+                console.log(s07g511_mean_5_lyr)
+
+                // Mean
+                // stops: [ // Point Cloud 1
+                //     { value: (0.00 * 1), color: "#ff2b18ff", label: "0.0" },
+                //     { value: (0.25 * 1), color: "#f5c926ff" },
+                //     { value: (0.50 * 1), color: "#7dfd94ff" },
+                //     { value: (0.75 * 1), color: "#1cc2fdff" },
+                //     { value: (1.00 * 1), color: "#5813fcff", label: "1.0" }
+                // ]
+                // stops: [ // Full Spectrum - Bright
+                //     { value: (0.00 * 1), color: "#FE230AFF", label: "0.0" },
+                //     { value: (0.33 * 1), color: "#F2FE1E" },
+                //     { value: (0.66 * 1), color: "#16FDFF" },
+                //     { value: (1.00 * 1), color: "#5C09FC", label: "1.0" }
+                // ]
+
+                // Standard Deviations
+                // stops: [ // Green 4
+                //     { value: (0.00 * 0.4419438625465172), color: "#006837ff", label: "0.00" },
+                //     { value: (0.25 * 0.4419438625465172), color: "#31a354ff" },
+                //     { value: (0.50 * 0.4419438625465172), color: "#78c679ff" },
+                //     { value: (0.75 * 0.4419438625465172), color: "#c2e699ff" },
+                //     { value: (1.00 * 0.4419438625465172), color: "#ffffccff", label: "0.44" }
+                // ]
+                // stops: [ // Yellow-Green (Continuous)
+                //     { value: (0.000 * 0.4419438625465172), color: "#004529FF", label: "0.00" },
+                //     { value: (0.125 * 0.4419438625465172), color: "#006837FF" },
+                //     { value: (0.250 * 0.4419438625465172), color: "#238443FF" },
+                //     { value: (0.375 * 0.4419438625465172), color: "#41AB5DFF" },
+                //     { value: (0.500 * 0.4419438625465172), color: "#78C679FF" },
+                //     { value: (0.625 * 0.4419438625465172), color: "#ADDD8EFF" },
+                //     { value: (0.750 * 0.4419438625465172), color: "#D9F0A3FF" },
+                //     { value: (0.875 * 0.4419438625465172), color: "#F7FCB9FF" },
+                //     { value: (1.000 * 0.4419438625465172), color: "#FFFFE5FF", label: "0.44" }
+                // ]
+
+                // Years Below 0.2 Threshold
+                // yrs_LtE_0_2_5 / 5
+
+                let mean5yrRenderer = {
+                    type: "simple",  // autocasts as new SimpleRenderer()
+                    symbol: { type: "simple-fill", outline: { color: [0, 0, 0, 0], width: 0 } },  // autocasts as new SimpleFillSymbol()
+                    visualVariables: [{
+                        type: "color",
+                        field: "HSI_mean_5",
+                        stops: [ // Full Spectrum - Bright
+                            { value: (0.00 * 1), color: "#FE230AFF", label: "0.0" },
+                            { value: (0.33 * 1), color: "#F2FE1E" },
+                            { value: (0.66 * 1), color: "#16FDFF" },
+                            { value: (1.00 * 1), color: "#5C09FC", label: "1.0" }
+                        ]
+                    }]
+                };
+
+                let stdev5yrRenderer = {
+                    type: "simple",  // autocasts as new SimpleRenderer()
+                    symbol: { type: "simple-fill", outline: { color: [0, 0, 0, 0], width: 0 } },  // autocasts as new SimpleFillSymbol()
+                    visualVariables: [{
+                        type: "color",
+                        field: "HSI_stdev_5",
+                        stops: [ // Yellow-Green (Continuous)
+                            { value: (0.000 * 0.4419438625465172), color: "#004529FF", label: "0.00" },
+                            { value: (0.125 * 0.4419438625465172), color: "#006837FF" },
+                            { value: (0.250 * 0.4419438625465172), color: "#238443FF" },
+                            { value: (0.375 * 0.4419438625465172), color: "#41AB5DFF" },
+                            { value: (0.500 * 0.4419438625465172), color: "#78C679FF" },
+                            { value: (0.625 * 0.4419438625465172), color: "#ADDD8EFF" },
+                            { value: (0.750 * 0.4419438625465172), color: "#D9F0A3FF" },
+                            { value: (0.875 * 0.4419438625465172), color: "#F7FCB9FF" },
+                            { value: (1.000 * 0.4419438625465172), color: "#FFFFE5FF", label: "0.44" }
+                        ]
+                    }]
+                };
+
+                // s07g511_mean_5_lyr.renderer = mean5yrRenderer;
+            }
+
+            require([
+                "esri/Map",
+                "esri/views/SceneView",
+                "esri/layers/FeatureLayer",
+                "esri/layers/SceneLayer",
+
+                "esri/symbols/SimpleMarkerSymbol",
+                "esri/symbols/SimpleLineSymbol",
+                "esri/symbols/WebStyleSymbol",
+                "esri/layers/support/LabelClass",
+
+                "esri/geometry/Extent",
+                "esri/geometry/Polygon",
+
+                "esri/renderers/SimpleRenderer",
+                "esri/renderers/UniqueValueRenderer",
+                "esri/renderers/ClassBreaksRenderer",
+
+                "esri/smartMapping/symbology/color",
+                "esri/smartMapping/symbology/support/colorRamps"
+            ], function (Map, SceneView, FeatureLayer, SceneLayer,
+                SimpleMarkerSymbol, SimpleLineSymbol, WebStyleSymbol, LabelClass,
+                Extent, Polygon,
+                SimpleRenderer, UniqueValueRenderer, ClassBreaksRenderer,
+                colorSchemes, colorRamps) {
+                // Esri Purple 1
+
+                ArcAPI_Code();
+
+                console.log("bar2");
+                const mapView = document.getElementById("arcgis-map-element")
+                const allLayerViews = mapView.allLayerViews.items
+                const allLayerViewLayers = allLayerViews.map(layerView => layerView.layer)
+                // console.log("allLayerViewLayers")
+                // console.log(allLayerViewLayers)
+                const mapViewMap = mapView.map
+                const allLayers = mapViewMap.allLayers.items
+                // console.log("allLayers")
+                // console.log(allLayers)
+
+                const s07g511_mean_5_lyr = allLayers.filter(l => l.title == "S07_G511_03_07_mean")[0];
+                console.log("s07g511_mean_5_lyr")
+                console.log(s07g511_mean_5_lyr)
+
+                let mean5yrRenderer = {
+                    type: "simple",  // autocasts as new SimpleRenderer()
+                    symbol: { type: "simple-fill", outline: { color: [0, 0, 0, 0], width: 0 } },  // autocasts as new SimpleFillSymbol()
+                    visualVariables: [{
+                        type: "color",
+                        field: "HSI_mean_5",
+                        stops: [ // Full Spectrum - Bright
+                            { value: (0.00 * 1), color: "#FE230AFF", label: "0.0" },
+                            { value: (0.33 * 1), color: "#F2FE1E" },
+                            { value: (0.66 * 1), color: "#16FDFF" },
+                            { value: (1.00 * 1), color: "#5C09FC", label: "1.0" }
+                        ]
+                    }]
+                };
+
+                let stdev5yrRenderer = {
+                    type: "simple",  // autocasts as new SimpleRenderer()
+                    symbol: { type: "simple-fill", outline: { color: [0, 0, 0, 0], width: 0 } },  // autocasts as new SimpleFillSymbol()
+                    visualVariables: [{
+                        type: "color",
+                        field: "HSI_stdev_5",
+                        stops: [ // Yellow-Green (Continuous)
+                            { value: (0.000 * 0.4419438625465172), color: "#004529FF", label: "0.00" },
+                            { value: (0.125 * 0.4419438625465172), color: "#006837FF" },
+                            { value: (0.250 * 0.4419438625465172), color: "#238443FF" },
+                            { value: (0.375 * 0.4419438625465172), color: "#41AB5DFF" },
+                            { value: (0.500 * 0.4419438625465172), color: "#78C679FF" },
+                            { value: (0.625 * 0.4419438625465172), color: "#ADDD8EFF" },
+                            { value: (0.750 * 0.4419438625465172), color: "#D9F0A3FF" },
+                            { value: (0.875 * 0.4419438625465172), color: "#F7FCB9FF" },
+                            { value: (1.000 * 0.4419438625465172), color: "#FFFFE5FF", label: "0.44" }
+                        ]
+                    }]
+                };
+
+                s07g511_mean_5_lyr.renderer = stdev5yrRenderer;
+            });
+        }
+    </script>
 </head>
 
-<body>
+<body class="claro">
+    <div id="esri-map-container">
+        <arcgis-map id="arcgis-map-element" item-id="567dca963a894ba3acf457ec3915800c">
 
-  <arcgis-map item-id="567dca963a894ba3acf457ec3915800c">
+            <arcgis-legend position="bottom-left" />
 
-    <arcgis-legend position="bottom-left" />
+            <arcgis-layer-list position="bottom-right" />
 
-    <arcgis-layer-list position="bottom-right" />
+        </arcgis-map>
+    </div>
+    <div id="basemapToggle-container"></div>
+    <div id="esri-colorinfoslider-container">
+        <div style="padding: 8px;">
+            <div id="title">
+                <h2>Seattle Demographics</h2>
+            </div>
+            <button class="btn" id="test-button" onclick="testing();">
+                Test
+            </button><br><br>
+            <div id="attSelection">
+                Situation and Group:
+                <select id="select-situation-group">
+                    <option value="S07_G511" selected>S07 G511</option>
+                    <option value="S08_G511">S08 G511</option>
+                    <option value="S07_G520">S07 G520</option>
+                    <option value="S08_G520">S08 G520</option>
+                </select><br><br>
 
-  </arcgis-map>
+                Year Span:
+                <select id="select-year">
+                    <option value="5" selected>03-07</option>
+                    <option value="10">03-12</option>
+                    <option value="15">03-17</option>
+                </select><br><br>
 
+                Statistic:
+                <select id="select-statistic">
+                    <option value="mean" selected>Mean</option>
+                    <option value="stdev">Standard Deviation</option>
+                    <option value="yrs_LtE_0_2">Years Below 0.2 Threshold</option>
+                </select>
+            </div>
+        </div>
+        <div id="esri-colorinfoslider"><img src="img/busy-indicator.gif" id="spinner"></div>
+    </div>
 </body>
 
 </html>
