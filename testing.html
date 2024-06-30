@@ -111,6 +111,22 @@
                 console.log("s07g511_mean_5_lyr")
                 console.log(s07g511_mean_5_lyr)
 
+                // stops: [ // Point Cloud 1
+                //     { value: 0.00, color: "#ff2b18ff", label: "0.0" },
+                //     { value: 0.25, color: "#f5c926ff" },
+                //     { value: 0.50, color: "#7dfd94ff" },
+                //     { value: 0.75, color: "#1cc2fdff" },
+                //     { value: 1.00, color: "#5813fcff", label: "1.0" }
+                // ]
+
+                // stops: [ // Full Spectrum - Bright
+                //     { value: 0.00, color: "#FE230AFF", label: "0.0" },
+                //     { value: 0.33, color: "#F2FE1E" },
+                //     { value: 0.66, color: "#16FDFF" },
+                //     { value: 1.00, color: "#5C09FC", label: "1.0" }
+                // ]
+
+
                 let mean5yrRenderer = {
                     type: "simple",  // autocasts as new SimpleRenderer()
                     symbol: { type: "simple-fill", outline: { color: [0, 0, 0, 0], width: 0 } },  // autocasts as new SimpleFillSymbol()
@@ -182,12 +198,11 @@
                     visualVariables: [{
                         type: "color",
                         field: "HSI_mean_5",
-                        stops: [
-                            { value: 0.00, color: "#ff2b18ff", label: "0.0" },
-                            { value: 0.25, color: "#f5c926ff" },
-                            { value: 0.50, color: "#7dfd94ff" },
-                            { value: 0.75, color: "#1cc2fdff" },
-                            { value: 1.00, color: "#5813fcff", label: "1.0" }
+                        stops: [ // Full Spectrum - Bright
+                            { value: 0.00, color: "#FE230AFF", label: "0.0" },
+                            { value: 0.33, color: "#F2FE1E" },
+                            { value: 0.66, color: "#16FDFF" },
+                            { value: 1.00, color: "#5C09FC", label: "1.0" }
                         ]
                     }]
                 };
