@@ -1,6 +1,7 @@
 # Samples using the ArcGIS API for JavaScript
 
 [Testing page](https://maxkret.github.io/agol-selectable-symbology/testing.html)
+[Testing Alternate page](https://maxkret.github.io/agol-selectable-symbology/testing-alternate.html)
 
 This repository contains select samples using the ArcGIS API for JavaScript in its 3.x and 4.0 versions.
 
