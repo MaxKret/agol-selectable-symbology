@@ -213,14 +213,14 @@
             console.log("select_statistic_value: " + select_statistic_value);
         }
 
-        let select_SG_Element = document.querySelector("#select-situation-group");
-        select_SG_Element.addEventListener("change", () => { updateSymbology(); });
+        // let select_SG_Element = document.querySelector("#select-situation-group");
+        // select_SG_Element.addEventListener("change", () => { updateSymbology(); });
 
-        let select_year_Element = document.querySelector("#select-year");
-        select_year_Element.addEventListener("change", () => { updateSymbology(); });
+        // let select_year_Element = document.querySelector("#select-year");
+        // select_year_Element.addEventListener("change", () => { updateSymbology(); });
 
-        let select_statistic_Element = document.querySelector("#select-statistic");
-        select_statistic_Element.addEventListener("change", () => { updateSymbology(); });
+        // let select_statistic_Element = document.querySelector("#select-statistic");
+        // select_statistic_Element.addEventListener("change", () => { updateSymbology(); });
 
         function btnClick() {
 
@@ -302,7 +302,7 @@
             </button><br><br>
             <div id="attSelection">
                 Situation and Group:
-                <select id="select-situation-group">
+                <select id="select-situation-group" onchange="updateSymbology();">
                     <option value="S07_G511" selected>S07 G511</option>
                     <option value="S08_G511">S08 G511</option>
                     <option value="S07_G520">S07 G520</option>
@@ -310,14 +310,14 @@
                 </select><br><br>
 
                 Year Span:
-                <select id="select-year">
+                <select id="select-year" onchange="updateSymbology();">
                     <option value="5" selected>03-07</option>
                     <option value="10">03-12</option>
                     <option value="15">03-17</option>
                 </select><br><br>
 
                 Statistic:
-                <select id="select-statistic">
+                <select id="select-statistic" onchange="updateSymbology();">
                     <option value="mean" selected>Mean</option>
                     <option value="stdev">Standard Deviation</option>
                     <option value="yrs_LtE_0_2">Years Below 0.2 Threshold</option>
