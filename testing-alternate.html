@@ -93,15 +93,13 @@
     </style>
 
     <script defer>
-        function testing() {
+        function btnClick() {
 
             function ArcAPI_Code() {
-                console.log("bar1");
+                console.log("code outside, called inside:");
                 const mapView = document.getElementById("arcgis-map-element")
                 const mapViewMap = mapView.map
                 const allLayers = mapViewMap.allLayers.items
-                // console.log("allLayers")
-                // console.log(allLayers)
 
                 const s07g511_lyr = allLayers.filter(l => l.title == "S07_G511")[0];
                 console.log("s07g511_lyr")
@@ -239,7 +237,7 @@
 
                 ArcAPI_Code();
 
-                console.log("bar2");
+                console.log("code fully inside:");
                 const mapView = document.getElementById("arcgis-map-element")
                 const mapViewMap = mapView.map
                 const allLayers = mapViewMap.allLayers.items
@@ -333,7 +331,7 @@
             <div id="title">
                 <h2>Seattle Demographics</h2>
             </div>
-            <button class="btn" id="test-button" onclick="testing();">
+            <button class="btn" id="test-button" onclick="btnClick();">
                 Test
             </button><br><br>
             <div id="attSelection">
