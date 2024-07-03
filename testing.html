@@ -150,53 +150,59 @@
         //     { minValue: 0.81, maxValue: 1.00, symbol: createSymbol("#9B1CF2"), label: "≤ 100%" }
         // ]
 
-        let mean5yrRenderer = {
-            type: "simple",  // autocasts as new SimpleRenderer()
-            symbol: { type: "simple-fill", outline: { color: [0, 0, 0, 0], width: 0 } },  // autocasts as new SimpleFillSymbol()
-            visualVariables: [{
-                type: "color",
-                field: "HSI_mean_5",
-                stops: [ // Full Spectrum - Bright
-                    { value: (0.00 * 1), color: "#FE230AFF", label: "0.0" },
-                    { value: (0.33 * 1), color: "#F2FE1E" },
-                    { value: (0.66 * 1), color: "#16FDFF" },
-                    { value: (1.00 * 1), color: "#5C09FC", label: "1.0" }
-                ]
-            }]
+        function meanRenderer(year) {
+            return {
+                type: "simple",  // autocasts as new SimpleRenderer()
+                symbol: { type: "simple-fill", outline: { color: [0, 0, 0, 0], width: 0 } },  // autocasts as new SimpleFillSymbol()
+                visualVariables: [{
+                    type: "color",
+                    field: `HSI_mean_${year}`,
+                    stops: [ // Full Spectrum - Bright
+                        { value: (0.00 * 1), color: "#FE230AFF", label: "0.0" },
+                        { value: (0.33 * 1), color: "#F2FE1E" },
+                        { value: (0.66 * 1), color: "#16FDFF" },
+                        { value: (1.00 * 1), color: "#5C09FC", label: "1.0" }
+                    ]
+                }]
+            }
         };
 
-        let stdev5yrRenderer = {
-            type: "simple",  // autocasts as new SimpleRenderer()
-            symbol: { type: "simple-fill", outline: { color: [0, 0, 0, 0], width: 0 } },  // autocasts as new SimpleFillSymbol()
-            visualVariables: [{
-                type: "color",
-                field: "HSI_stdev_5",
-                stops: [ // Yellow-Green (Continuous)
-                    { value: (0.000 * 0.4419438625465172), color: "#004529FF", label: "0.00" },
-                    { value: (0.125 * 0.4419438625465172), color: "#006837FF" },
-                    { value: (0.250 * 0.4419438625465172), color: "#238443FF" },
-                    { value: (0.375 * 0.4419438625465172), color: "#41AB5DFF" },
-                    { value: (0.500 * 0.4419438625465172), color: "#78C679FF" },
-                    { value: (0.625 * 0.4419438625465172), color: "#ADDD8EFF" },
-                    { value: (0.750 * 0.4419438625465172), color: "#D9F0A3FF" },
-                    { value: (0.875 * 0.4419438625465172), color: "#F7FCB9FF" },
-                    { value: (1.000 * 0.4419438625465172), color: "#FFFFE5FF", label: "0.44" }
-                ]
-            }]
+        function stdevRenderer(year) {
+            return {
+                type: "simple",  // autocasts as new SimpleRenderer()
+                symbol: { type: "simple-fill", outline: { color: [0, 0, 0, 0], width: 0 } },  // autocasts as new SimpleFillSymbol()
+                visualVariables: [{
+                    type: "color",
+                    field: `HSI_stdev_${year}`,
+                    stops: [ // Yellow-Green (Continuous)
+                        { value: (0.000 * 0.4419438625465172), color: "#004529FF", label: "0.00" },
+                        { value: (0.125 * 0.4419438625465172), color: "#006837FF" },
+                        { value: (0.250 * 0.4419438625465172), color: "#238443FF" },
+                        { value: (0.375 * 0.4419438625465172), color: "#41AB5DFF" },
+                        { value: (0.500 * 0.4419438625465172), color: "#78C679FF" },
+                        { value: (0.625 * 0.4419438625465172), color: "#ADDD8EFF" },
+                        { value: (0.750 * 0.4419438625465172), color: "#D9F0A3FF" },
+                        { value: (0.875 * 0.4419438625465172), color: "#F7FCB9FF" },
+                        { value: (1.000 * 0.4419438625465172), color: "#FFFFE5FF", label: "0.44" }
+                    ]
+                }]
+            }
         };
 
-        let lteThreshold5yrRenderer = {
-            type: "class-breaks",  // autocasts as new ClassBreaksRenderer()
-            valueExpression: "$feature.yrs_LtE_0_2_5 / 5",
-            backgroundFillSymbol: { type: "simple-fill", outline: { color: [0, 0, 0, 0], width: 0 } },  // autocasts as new SimpleFillSymbol()
-            classBreakInfos: [ // Esri Purple 1
-                { minValue: 0.00, maxValue: 0.00, symbol: createSymbol("#E9C5EA"), label: "≤ 0%" },
-                { minValue: 0.01, maxValue: 0.20, symbol: createSymbol("#DDA7ED"), label: "≤ 20%" },
-                { minValue: 0.21, maxValue: 0.40, symbol: createSymbol("#CF8AEF"), label: "≤ 40%" },
-                { minValue: 0.41, maxValue: 0.60, symbol: createSymbol("#C06AF0"), label: "≤ 60%" },
-                { minValue: 0.61, maxValue: 0.80, symbol: createSymbol("#AF44F2"), label: "≤ 80%" },
-                { minValue: 0.81, maxValue: 1.00, symbol: createSymbol("#9B1CF2"), label: "≤ 100%" }
-            ]
+        function lteThresholdRenderer(year) {
+            return {
+                type: "class-breaks",  // autocasts as new ClassBreaksRenderer()
+                valueExpression: `$feature.yrs_LtE_0_2_${year} / ${year}`,
+                backgroundFillSymbol: { type: "simple-fill", outline: { color: [0, 0, 0, 0], width: 0 } },  // autocasts as new SimpleFillSymbol()
+                classBreakInfos: [ // Esri Purple 1
+                    { minValue: 0.00, maxValue: 0.00, symbol: createSymbol("#E9C5EA"), label: "≤ 0%" },
+                    { minValue: 0.01, maxValue: 0.20, symbol: createSymbol("#DDA7ED"), label: "≤ 20%" },
+                    { minValue: 0.21, maxValue: 0.40, symbol: createSymbol("#CF8AEF"), label: "≤ 40%" },
+                    { minValue: 0.41, maxValue: 0.60, symbol: createSymbol("#C06AF0"), label: "≤ 60%" },
+                    { minValue: 0.61, maxValue: 0.80, symbol: createSymbol("#AF44F2"), label: "≤ 80%" },
+                    { minValue: 0.81, maxValue: 1.00, symbol: createSymbol("#9B1CF2"), label: "≤ 100%" }
+                ]
+            }
         };
 
         function btnClick() {
@@ -211,7 +217,7 @@
                 console.log("s07g511_mean_5_lyr")
                 console.log(s07g511_mean_5_lyr)
 
-                // s07g511_mean_5_lyr.renderer = lteThreshold5yrRenderer;
+                // s07g511_mean_5_lyr.renderer = lteThresholdRenderer(5);
             }
 
             require([
@@ -252,7 +258,7 @@
                 console.log("s07g511_mean_5_lyr")
                 console.log(s07g511_mean_5_lyr)
 
-                s07g511_mean_5_lyr.renderer = lteThreshold5yrRenderer;
+                s07g511_mean_5_lyr.renderer = lteThresholdRenderer(5);
             });
         }
     </script>
