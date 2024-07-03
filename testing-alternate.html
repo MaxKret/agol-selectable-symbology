@@ -213,10 +213,6 @@
             let select_year_value = select_year_Element.value; // 5, 10, 15
             let select_statistic_value = select_statistic_Element.value; // mean, stdev, yrs_LtE_0_2
 
-            console.log("select_SG_value: " + select_SG_value);
-            console.log("select_year_value: " + select_year_value);
-            console.log("select_statistic_value: " + select_statistic_value);
-
             const mapView = document.getElementById("arcgis-map-element")
             const mapViewMap = mapView.map
             const allLayers = mapViewMap.allLayers.items
@@ -240,7 +236,7 @@
                     s07g511_lyr.renderer = lteThresholdRenderer(select_year_value);
                     s08g511_lyr.renderer = lteThresholdRenderer(select_year_value);
                     break;
-            
+
                 default:
                     break;
             }
@@ -306,8 +302,8 @@
 </head>
 
 <body class="claro">
-    <div id="esri-map-container" onchange="console.log('container onchange');" onsuspend="console.log('container onsuspend');" onreadystatechange="console.log('container onreadystatechange');">
-        <arcgis-map id="arcgis-map-element" item-id="8c5bbd817e5342c2a46d7010dfc0c534" onchange="console.log('onchange');" onsuspend="console.log('onsuspend');" onreadystatechange="console.log('onreadystatechange');">
+    <div id="esri-map-container" onload="console.log('container onload');">
+        <arcgis-map id="arcgis-map-element" item-id="8c5bbd817e5342c2a46d7010dfc0c534" onload="console.log('onload');">
 
             <arcgis-legend position="bottom-left" />
 
@@ -351,5 +347,101 @@
         <div id="esri-colorinfoslider"><img src="img/busy-indicator.gif" id="spinner"></div>
     </div>
 </body>
+
+<script>
+    const mapViewElement = document.getElementById("arcgis-map-element")
+
+    const observerTarget = document.querySelector("#container");
+    const output = document.querySelector("#output");
+
+    // const config = {
+    //     subtree: true,
+    //     attributeOldValue: true,
+    // };
+
+    // const callback = (mutationList) => {
+    //     for (const mutation of mutationList) {
+    //         if (mutation.type === "attributes") {
+    //             console.log(`The ${mutation.attributeName} attribute was modified from "${mutation.oldValue}".`);
+    //         }
+    //     }
+    // };
+
+    const observer = new MutationObserver((mutationList) => {
+        let spinnerElement = document.getElementById("spinner")
+        for (const mutation of mutationList) {
+            let attVal = mutation.target.getAttribute(mutation.attributeName)
+            console.log(`The ${mutation.attributeName} attribute was modified from "${mutation.oldValue}" to "${attVal}" for ${mutation.target.nodeName}.`);
+            switch (attVal) {
+                case "": // updating
+                    console.log("updating")
+                    spinnerElement.style.visibility = "visible"
+                    break;
+                case null: // not updating
+                    console.log("not updating")
+                    spinnerElement.style.visibility = "hidden"
+                    break;
+            
+                default:
+                    console.log("something else")
+                    console.log(mutation.target.getAttribute(mutation.attributeName))
+                    break;
+            }
+        }
+    });
+    observer.observe(mapViewElement, {
+        subtree: false,
+        attributeOldValue: true,
+        attributeFilter: ["updating"],
+    });
+
+    require([
+        "esri/core/Accessor", "esri/core/reactiveUtils", "esri/Map", "esri/MapView",
+    ], (Accessor, reactiveUtils, Map, MapView) => {
+        let mapView = document.getElementById("arcgis-map-element")
+        console.log("mapView:")
+        console.log(mapView)
+
+        let handle = reactiveUtils.watch(() => map.updating, (newVal) => {
+            // Each time the value of map.basemap changes, it is logged in the console
+            console.log("new basemap: ", newVal);
+        });
+
+        let handle2 = mapview.watch("updating", function (newValue, oldValue, propertyName, target) {
+            console.log(propertyName + " changed from " + oldValue + " to " + newValue);
+        });
+
+        let handle3 = reactiveUtils.watch(
+            // getValue function
+            () => mapView.updating,
+            // callback
+            (updating) => {
+                console.log(updating)
+            }
+        );
+
+        let handle4 = reactiveUtils.watch(
+            // getValue function
+            () => view.updating,
+            // callback
+            (updating) => {
+                console.log(updating)
+            }
+        );
+
+        let handle5 = reactiveUtils.watch(
+            // getValue function
+            () => mapView.view.updating,
+            // callback
+            (updating) => {
+                console.log(updating)
+            }
+        );
+
+        mapView.addHandles(handle)
+    });
+
+
+</script>
 
 </html>
