@@ -199,6 +199,29 @@
             ]
         };
 
+        function updateSymbology() {
+            let select_SG_Element = document.querySelector("#select-situation-group");
+            let select_year_Element = document.querySelector("#select-year");
+            let select_statistic_Element = document.querySelector("#select-statistic");
+
+            let select_SG_value = select_SG_Element.value;
+            let select_year_value = select_year_Element.value;
+            let select_statistic_value = select_statistic_Element.value;
+
+            console.log("select_SG_value: " + select_SG_value);
+            console.log("select_year_value: " + select_year_value);
+            console.log("select_statistic_value: " + select_statistic_value);
+        }
+
+        let select_SG_Element = document.querySelector("#select-situation-group");
+        select_SG_Element.addEventListener("change", () => { updateSymbology(); });
+
+        let select_year_Element = document.querySelector("#select-year");
+        select_year_Element.addEventListener("change", () => { updateSymbology(); });
+
+        let select_statistic_Element = document.querySelector("#select-statistic");
+        select_statistic_Element.addEventListener("change", () => { updateSymbology(); });
+
         function btnClick() {
 
             function ArcAPI_Code() {
