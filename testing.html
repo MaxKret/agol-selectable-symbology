@@ -107,6 +107,18 @@
                 console.log("s07g511_mean_5_lyr")
                 console.log(s07g511_mean_5_lyr)
 
+                function createSymbol(color) {
+                    return {
+                        type: "simple-fill",
+                        color,
+                        style: "solid",
+                        outline: {
+                            width: 0,
+                            color: [0, 0, 0, 0]
+                        }
+                    };
+                }
+
                 // Mean
                 // stops: [ // Point Cloud 1
                 //     { value: (0.00 * 1), color: "#ff2b18ff", label: "0.0" },
@@ -181,19 +193,19 @@
                     }]
                 };
 
-                // let lteThreshold5yrRenderer = {
-                //     type: "class-breaks",  // autocasts as new ClassBreaksRenderer()
-                //     valueExpression: "$feature.yrs_LtE_0_2_5 / 5",
-                //     backgroundFillSymbol : { type: "simple-fill", outline: { color: [0, 0, 0, 0], width: 0 } },  // autocasts as new SimpleFillSymbol()
-                //     classBreakInfos: [ // Esri Purple 1
-                //         { minValue: 0.00, maxValue: 0.00, symbol: createSymbol("#E9C5EA"), label: "≤ 0%" },
-                //         { minValue: 0.01, maxValue: 0.20, symbol: createSymbol("#DDA7ED"), label: "≤ 20%" },
-                //         { minValue: 0.21, maxValue: 0.40, symbol: createSymbol("#CF8AEF"), label: "≤ 40%" },
-                //         { minValue: 0.41, maxValue: 0.60, symbol: createSymbol("#C06AF0"), label: "≤ 60%" },
-                //         { minValue: 0.61, maxValue: 0.80, symbol: createSymbol("#AF44F2"), label: "≤ 80%" },
-                //         { minValue: 0.81, maxValue: 1.00, symbol: createSymbol("#9B1CF2"), label: "≤ 100%" }
-                //     ]
-                // };
+                let lteThreshold5yrRenderer = {
+                    type: "class-breaks",  // autocasts as new ClassBreaksRenderer()
+                    valueExpression: "$feature.yrs_LtE_0_2_5 / 5",
+                    backgroundFillSymbol: { type: "simple-fill", outline: { color: [0, 0, 0, 0], width: 0 } },  // autocasts as new SimpleFillSymbol()
+                    classBreakInfos: [ // Esri Purple 1
+                        { minValue: 0.00, maxValue: 0.00, symbol: createSymbol("#E9C5EA"), label: "≤ 0%" },
+                        { minValue: 0.01, maxValue: 0.20, symbol: createSymbol("#DDA7ED"), label: "≤ 20%" },
+                        { minValue: 0.21, maxValue: 0.40, symbol: createSymbol("#CF8AEF"), label: "≤ 40%" },
+                        { minValue: 0.41, maxValue: 0.60, symbol: createSymbol("#C06AF0"), label: "≤ 60%" },
+                        { minValue: 0.61, maxValue: 0.80, symbol: createSymbol("#AF44F2"), label: "≤ 80%" },
+                        { minValue: 0.81, maxValue: 1.00, symbol: createSymbol("#9B1CF2"), label: "≤ 100%" }
+                    ]
+                };
 
                 // s07g511_mean_5_lyr.renderer = mean5yrRenderer;
             }
@@ -238,6 +250,18 @@
                 console.log("s07g511_mean_5_lyr")
                 console.log(s07g511_mean_5_lyr)
 
+                function createSymbol(color) {
+                    return {
+                        type: "simple-fill",
+                        color,
+                        style: "solid",
+                        outline: {
+                            width: 0,
+                            color: [0, 0, 0, 0]
+                        }
+                    };
+                }
+
                 let mean5yrRenderer = {
                     type: "simple",  // autocasts as new SimpleRenderer()
                     symbol: { type: "simple-fill", outline: { color: [0, 0, 0, 0], width: 0 } },  // autocasts as new SimpleFillSymbol()
@@ -273,19 +297,19 @@
                     }]
                 };
 
-                // let lteThreshold5yrRenderer = {
-                //     type: "class-breaks",  // autocasts as new ClassBreaksRenderer()
-                //     valueExpression: "$feature.yrs_LtE_0_2_5 / 5",
-                //     backgroundFillSymbol : { type: "simple-fill", outline: { color: [0, 0, 0, 0], width: 0 } },  // autocasts as new SimpleFillSymbol()
-                //     classBreakInfos: [ // Esri Purple 1
-                //         { minValue: 0.00, maxValue: 0.00, symbol: createSymbol("#E9C5EA"), label: "≤ 0%" },
-                //         { minValue: 0.01, maxValue: 0.20, symbol: createSymbol("#DDA7ED"), label: "≤ 20%" },
-                //         { minValue: 0.21, maxValue: 0.40, symbol: createSymbol("#CF8AEF"), label: "≤ 40%" },
-                //         { minValue: 0.41, maxValue: 0.60, symbol: createSymbol("#C06AF0"), label: "≤ 60%" },
-                //         { minValue: 0.61, maxValue: 0.80, symbol: createSymbol("#AF44F2"), label: "≤ 80%" },
-                //         { minValue: 0.81, maxValue: 1.00, symbol: createSymbol("#9B1CF2"), label: "≤ 100%" }
-                //     ]
-                // };
+                let lteThreshold5yrRenderer = {
+                    type: "class-breaks",  // autocasts as new ClassBreaksRenderer()
+                    valueExpression: "$feature.yrs_LtE_0_2_5 / 5",
+                    backgroundFillSymbol: { type: "simple-fill", outline: { color: [0, 0, 0, 0], width: 0 } },  // autocasts as new SimpleFillSymbol()
+                    classBreakInfos: [ // Esri Purple 1
+                        { minValue: 0.00, maxValue: 0.00, symbol: createSymbol("#E9C5EA"), label: "≤ 0%" },
+                        { minValue: 0.01, maxValue: 0.20, symbol: createSymbol("#DDA7ED"), label: "≤ 20%" },
+                        { minValue: 0.21, maxValue: 0.40, symbol: createSymbol("#CF8AEF"), label: "≤ 40%" },
+                        { minValue: 0.41, maxValue: 0.60, symbol: createSymbol("#C06AF0"), label: "≤ 60%" },
+                        { minValue: 0.61, maxValue: 0.80, symbol: createSymbol("#AF44F2"), label: "≤ 80%" },
+                        { minValue: 0.81, maxValue: 1.00, symbol: createSymbol("#9B1CF2"), label: "≤ 100%" }
+                    ]
+                };
 
                 s07g511_mean_5_lyr.renderer = stdev5yrRenderer;
             });
