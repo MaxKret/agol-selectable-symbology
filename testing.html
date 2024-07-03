@@ -98,10 +98,6 @@
             function ArcAPI_Code() {
                 console.log("bar1");
                 const mapView = document.getElementById("arcgis-map-element")
-                const allLayerViews = mapView.allLayerViews.items
-                const allLayerViewLayers = allLayerViews.map(layerView => layerView.layer)
-                // console.log("allLayerViewLayers")
-                // console.log(allLayerViewLayers)
                 const mapViewMap = mapView.map
                 const allLayers = mapViewMap.allLayers.items
                 // console.log("allLayers")
@@ -148,6 +144,7 @@
 
                 // Years Below 0.2 Threshold
                 // yrs_LtE_0_2_5 / 5
+                // label "≤ 0.2"
 
                 let mean5yrRenderer = {
                     type: "simple",  // autocasts as new SimpleRenderer()
@@ -184,6 +181,20 @@
                     }]
                 };
 
+                let lteThreshold5yrRenderer = {
+                    type: "class-breaks",  // autocasts as new ClassBreaksRenderer()
+                    valueExpression: "$feature.yrs_LtE_0_2_5 / 5",
+                    backgroundFillSymbol : { type: "simple-fill", outline: { color: [0, 0, 0, 0], width: 0 } },  // autocasts as new SimpleFillSymbol()
+                    classBreakInfos: [ // Esri Purple 1
+                        { minValue: 0.00, maxValue: 0.00, symbol: createSymbol("#E9C5EA"), label: "≤ 0%" },
+                        { minValue: 0.01, maxValue: 0.20, symbol: createSymbol("#DDA7ED"), label: "≤ 20%" },
+                        { minValue: 0.21, maxValue: 0.40, symbol: createSymbol("#CF8AEF"), label: "≤ 40%" },
+                        { minValue: 0.41, maxValue: 0.60, symbol: createSymbol("#C06AF0"), label: "≤ 60%" },
+                        { minValue: 0.61, maxValue: 0.80, symbol: createSymbol("#AF44F2"), label: "≤ 80%" },
+                        { minValue: 0.81, maxValue: 1.00, symbol: createSymbol("#9B1CF2"), label: "≤ 100%" }
+                    ]
+                };
+
                 // s07g511_mean_5_lyr.renderer = mean5yrRenderer;
             }
 
@@ -218,10 +229,6 @@
 
                 console.log("bar2");
                 const mapView = document.getElementById("arcgis-map-element")
-                const allLayerViews = mapView.allLayerViews.items
-                const allLayerViewLayers = allLayerViews.map(layerView => layerView.layer)
-                // console.log("allLayerViewLayers")
-                // console.log(allLayerViewLayers)
                 const mapViewMap = mapView.map
                 const allLayers = mapViewMap.allLayers.items
                 // console.log("allLayers")
@@ -264,6 +271,20 @@
                             { value: (1.000 * 0.4419438625465172), color: "#FFFFE5FF", label: "0.44" }
                         ]
                     }]
+                };
+
+                let lteThreshold5yrRenderer = {
+                    type: "class-breaks",  // autocasts as new ClassBreaksRenderer()
+                    valueExpression: "$feature.yrs_LtE_0_2_5 / 5",
+                    backgroundFillSymbol : { type: "simple-fill", outline: { color: [0, 0, 0, 0], width: 0 } },  // autocasts as new SimpleFillSymbol()
+                    classBreakInfos: [ // Esri Purple 1
+                        { minValue: 0.00, maxValue: 0.00, symbol: createSymbol("#E9C5EA"), label: "≤ 0%" },
+                        { minValue: 0.01, maxValue: 0.20, symbol: createSymbol("#DDA7ED"), label: "≤ 20%" },
+                        { minValue: 0.21, maxValue: 0.40, symbol: createSymbol("#CF8AEF"), label: "≤ 40%" },
+                        { minValue: 0.41, maxValue: 0.60, symbol: createSymbol("#C06AF0"), label: "≤ 60%" },
+                        { minValue: 0.61, maxValue: 0.80, symbol: createSymbol("#AF44F2"), label: "≤ 80%" },
+                        { minValue: 0.81, maxValue: 1.00, symbol: createSymbol("#9B1CF2"), label: "≤ 100%" }
+                    ]
                 };
 
                 s07g511_mean_5_lyr.renderer = stdev5yrRenderer;
