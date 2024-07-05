@@ -12,6 +12,15 @@
     <script type="module" src="https://js.arcgis.com/map-components/4.30/arcgis-map-components.esm.js"></script>
 
     <style>
+        :root {
+            --dark-bg-color: #082539;
+            --dark-text-color: #8cb7c9;
+            --dark-alt-bg-color: #4e5859;
+            --light-bg-color: #ffffff;
+            --light-text-color: #082539;
+            --light-alt-bg-color: #8cb7c9;
+        }
+
         html,
         body {
             margin: 0;
@@ -33,36 +42,23 @@
             z-index: 2;
             bottom: 0;
             left: 0;
-            background-color: #FFFCD4;
-            color: #6B3B64;
+            background-color: var(--dark-bg-color);
+            color: var(--dark-text-color); 
             height: 100%;
             width: 300px;
             border-top-right-radius: 8px;
             overflow-x: hidden;
         }
 
-        #basemapToggle-container {
-            z-index: 4;
-            position: absolute;
-            top: 15px;
-            right: 15px;
-        }
-
         #spinner {
             visibility: hidden;
             position: relative;
             z-index: 98;
-            left: 90px;
-            bottom: 250px;
+            left: 130px;
         }
 
         .btn {
-            background: #3498db;
-            background-image: -webkit-linear-gradient(top, #6B3B64, #6B3B64);
-            background-image: -moz-linear-gradient(top, #6B3B64, #6B3B64);
-            background-image: -ms-linear-gradient(top, #6B3B64, #6B3B64);
-            background-image: -o-linear-gradient(top, #6B3B64, #6B3B64);
-            background-image: linear-gradient(to bottom, #6B3B64, #6B3B64);
+            background: var(--dark-text-color);
             -webkit-border-radius: 28;
             -moz-border-radius: 28;
             border-radius: 28px;
@@ -74,21 +70,12 @@
         }
 
         .btn:hover {
-            background: #3cb0fd;
-            background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
-            background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
-            background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
-            background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
-            background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+            background: var(--dark-alt-bg-color);
             text-decoration: none;
         }
 
         h2 {
             text-align: center;
-        }
-
-        #esri_dijit_RendererSlider_0 {
-            background-color: #FFFCD4;
         }
     </style>
 
