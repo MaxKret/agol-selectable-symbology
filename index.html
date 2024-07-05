@@ -92,51 +92,6 @@
             };
         }
 
-        // Mean
-        // stops: [ // Point Cloud 1
-        //     { value: (0.00 * 1), color: "#ff2b18ff", label: "0.0" },
-        //     { value: (0.25 * 1), color: "#f5c926ff" },
-        //     { value: (0.50 * 1), color: "#7dfd94ff" },
-        //     { value: (0.75 * 1), color: "#1cc2fdff" },
-        //     { value: (1.00 * 1), color: "#5813fcff", label: "1.0" }
-        // ]
-        // stops: [ // Full Spectrum - Bright
-        //     { value: (0.00 * 1), color: "#FE230AFF", label: "0.0" },
-        //     { value: (0.33 * 1), color: "#F2FE1E" },
-        //     { value: (0.66 * 1), color: "#16FDFF" },
-        //     { value: (1.00 * 1), color: "#5C09FC", label: "1.0" }
-        // ]
-
-        // Standard Deviations
-        // stops: [ // Green 4
-        //     { value: (0.00 * 0.4419438625465172), color: "#006837ff", label: "0.00" },
-        //     { value: (0.25 * 0.4419438625465172), color: "#31a354ff" },
-        //     { value: (0.50 * 0.4419438625465172), color: "#78c679ff" },
-        //     { value: (0.75 * 0.4419438625465172), color: "#c2e699ff" },
-        //     { value: (1.00 * 0.4419438625465172), color: "#ffffccff", label: "0.44" }
-        // ]
-        // stops: [ // Yellow-Green (Continuous)
-        //     { value: (0.000 * 0.4419438625465172), color: "#004529FF", label: "0.00" },
-        //     { value: (0.125 * 0.4419438625465172), color: "#006837FF" },
-        //     { value: (0.250 * 0.4419438625465172), color: "#238443FF" },
-        //     { value: (0.375 * 0.4419438625465172), color: "#41AB5DFF" },
-        //     { value: (0.500 * 0.4419438625465172), color: "#78C679FF" },
-        //     { value: (0.625 * 0.4419438625465172), color: "#ADDD8EFF" },
-        //     { value: (0.750 * 0.4419438625465172), color: "#D9F0A3FF" },
-        //     { value: (0.875 * 0.4419438625465172), color: "#F7FCB9FF" },
-        //     { value: (1.000 * 0.4419438625465172), color: "#FFFFE5FF", label: "0.44" }
-        // ]
-
-        // Years Below 0.2 Threshold
-        // classBreakInfos: [ // Esri Purple 1?
-        //     { minValue: 0.00, maxValue: 0.00, symbol: createSymbol("#E9C5EA"), label: "≤ 0%" },
-        //     { minValue: 0.01, maxValue: 0.20, symbol: createSymbol("#DDA7ED"), label: "≤ 20%" },
-        //     { minValue: 0.21, maxValue: 0.40, symbol: createSymbol("#CF8AEF"), label: "≤ 40%" },
-        //     { minValue: 0.41, maxValue: 0.60, symbol: createSymbol("#C06AF0"), label: "≤ 60%" },
-        //     { minValue: 0.61, maxValue: 0.80, symbol: createSymbol("#AF44F2"), label: "≤ 80%" },
-        //     { minValue: 0.81, maxValue: 1.00, symbol: createSymbol("#9B1CF2"), label: "≤ 100%" }
-        // ]
-
         function meanRenderer(year) {
             return {
                 type: "simple",  // autocasts as new SimpleRenderer()
@@ -252,8 +207,8 @@
                 <select id="select-situation-group" onchange="updateSymbology();">
                     <option value="S07_G511" selected>S07 G511</option>
                     <option value="S08_G511">S08 G511</option>
-                    <option value="S07_G520">S07 G520</option>
-                    <option value="S08_G520">S08 G520</option>
+                    <!-- <option value="S07_G520">S07 G520</option>
+                    <option value="S08_G520">S08 G520</option> -->
                 </select><br><br>
 
                 <b>Year Span:</b>
