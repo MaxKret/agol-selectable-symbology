@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>LDWF OSP Initiative #7</title>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.30/esri/themes/light/main.css">
+    <link rel="stylesheet" href="//js.arcgis.com/3.17/dijit/themes/claro/claro.css">
+    <link rel="stylesheet" href="//js.arcgis.com/3.17/esri/css/esri.css">
+    <script src="https://js.arcgis.com/4.30/"></script>
+    <script type="module" src="https://js.arcgis.com/map-components/4.30/arcgis-map-components.esm.js"></script>
+
+    <style>
+        :root {
+            --dark-bg-color: #082539;
+            --dark-text-color: #8cb7c9;
+            --dark-alt-bg-color: #4e5859;
+            --light-bg-color: #ffffff;
+            --light-text-color: #082539;
+            --light-alt-bg-color: #8cb7c9;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        #esri-map-container {
+            height: 100%;
+            width: -webkit-fill-available;
+            left: 300px;
+            position: absolute;
+        }
+
+        #esri-colorinfoslider-container {
+            position: absolute;
+            z-index: 2;
+            bottom: 0;
+            left: 0;
+            background-color: var(--dark-bg-color);
+            color: var(--dark-text-color); 
+            height: 100%;
+            width: 300px;
+            border-top-right-radius: 8px;
+            overflow-x: hidden;
+        }
+
+        #spinner {
+            visibility: hidden;
+            position: relative;
+            z-index: 98;
+            left: 130px;
+        }
+
+        .btn {
+            background: var(--dark-text-color);
+            -webkit-border-radius: 28;
+            -moz-border-radius: 28;
+            border-radius: 28px;
+            font-family: Arial;
+            color: #ffffff;
+            font-size: 14px;
+            padding: 3px 7px 3px 7px;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: var(--dark-alt-bg-color);
+            text-decoration: none;
+        }
+
+        h2 {
+            text-align: center;
+        }
+    </style>
+
+    <script defer>
+        function createSymbol(color) {
+            return {
+                type: "simple-fill",
+                color,
+                style: "solid",
+                outline: {
+                    width: 0,
+                    color: [0, 0, 0, 0]
+                }
+            };
+        }
+
+        // Mean
+        // stops: [ // Point Cloud 1
+        //     { value: (0.00 * 1), color: "#ff2b18ff", label: "0.0" },
+        //     { value: (0.25 * 1), color: "#f5c926ff" },
+        //     { value: (0.50 * 1), color: "#7dfd94ff" },
+        //     { value: (0.75 * 1), color: "#1cc2fdff" },
+        //     { value: (1.00 * 1), color: "#5813fcff", label: "1.0" }
+        // ]
+        // stops: [ // Full Spectrum - Bright
+        //     { value: (0.00 * 1), color: "#FE230AFF", label: "0.0" },
+        //     { value: (0.33 * 1), color: "#F2FE1E" },
+        //     { value: (0.66 * 1), color: "#16FDFF" },
+        //     { value: (1.00 * 1), color: "#5C09FC", label: "1.0" }
+        // ]
+
+        // Standard Deviations
+        // stops: [ // Green 4
+        //     { value: (0.00 * 0.4419438625465172), color: "#006837ff", label: "0.00" },
+        //     { value: (0.25 * 0.4419438625465172), color: "#31a354ff" },
+        //     { value: (0.50 * 0.4419438625465172), color: "#78c679ff" },
+        //     { value: (0.75 * 0.4419438625465172), color: "#c2e699ff" },
+        //     { value: (1.00 * 0.4419438625465172), color: "#ffffccff", label: "0.44" }
+        // ]
+        // stops: [ // Yellow-Green (Continuous)
+        //     { value: (0.000 * 0.4419438625465172), color: "#004529FF", label: "0.00" },
+        //     { value: (0.125 * 0.4419438625465172), color: "#006837FF" },
+        //     { value: (0.250 * 0.4419438625465172), color: "#238443FF" },
+        //     { value: (0.375 * 0.4419438625465172), color: "#41AB5DFF" },
+        //     { value: (0.500 * 0.4419438625465172), color: "#78C679FF" },
+        //     { value: (0.625 * 0.4419438625465172), color: "#ADDD8EFF" },
+        //     { value: (0.750 * 0.4419438625465172), color: "#D9F0A3FF" },
+        //     { value: (0.875 * 0.4419438625465172), color: "#F7FCB9FF" },
+        //     { value: (1.000 * 0.4419438625465172), color: "#FFFFE5FF", label: "0.44" }
+        // ]
+
+        // Years Below 0.2 Threshold
+        // classBreakInfos: [ // Esri Purple 1?
+        //     { minValue: 0.00, maxValue: 0.00, symbol: createSymbol("#E9C5EA"), label: "≤ 0%" },
+        //     { minValue: 0.01, maxValue: 0.20, symbol: createSymbol("#DDA7ED"), label: "≤ 20%" },
+        //     { minValue: 0.21, maxValue: 0.40, symbol: createSymbol("#CF8AEF"), label: "≤ 40%" },
+        //     { minValue: 0.41, maxValue: 0.60, symbol: createSymbol("#C06AF0"), label: "≤ 60%" },
+        //     { minValue: 0.61, maxValue: 0.80, symbol: createSymbol("#AF44F2"), label: "≤ 80%" },
+        //     { minValue: 0.81, maxValue: 1.00, symbol: createSymbol("#9B1CF2"), label: "≤ 100%" }
+        // ]
+
+        function meanRenderer(year) {
+            return {
+                type: "simple",  // autocasts as new SimpleRenderer()
+                symbol: { type: "simple-fill", outline: { color: [0, 0, 0, 0], width: 0 } },  // autocasts as new SimpleFillSymbol()
+                visualVariables: [{
+                    type: "color",
+                    field: `HSI_mean_${year}`,
+                    stops: [ // Full Spectrum - Bright
+                        { value: (0.00 * 1), color: "#FE230AFF", label: "0.0" },
+                        { value: (0.33 * 1), color: "#F2FE1E" },
+                        { value: (0.66 * 1), color: "#16FDFF" },
+                        { value: (1.00 * 1), color: "#5C09FC", label: "1.0" }
+                    ]
+                }]
+            }
+        };
+
+        function stdevRenderer(year) {
+            return {
+                type: "simple",  // autocasts as new SimpleRenderer()
+                symbol: { type: "simple-fill", outline: { color: [0, 0, 0, 0], width: 0 } },  // autocasts as new SimpleFillSymbol()
+                visualVariables: [{
+                    type: "color",
+                    field: `HSI_stdev_${year}`,
+                    stops: [ // Yellow-Green (Continuous)
+                        { value: (0.000 * 0.4419438625465172), color: "#004529FF", label: "0.00" },
+                        { value: (0.125 * 0.4419438625465172), color: "#006837FF" },
+                        { value: (0.250 * 0.4419438625465172), color: "#238443FF" },
+                        { value: (0.375 * 0.4419438625465172), color: "#41AB5DFF" },
+                        { value: (0.500 * 0.4419438625465172), color: "#78C679FF" },
+                        { value: (0.625 * 0.4419438625465172), color: "#ADDD8EFF" },
+                        { value: (0.750 * 0.4419438625465172), color: "#D9F0A3FF" },
+                        { value: (0.875 * 0.4419438625465172), color: "#F7FCB9FF" },
+                        { value: (1.000 * 0.4419438625465172), color: "#FFFFE5FF", label: "0.44" }
+                    ]
+                }]
+            }
+        };
+
+        function lteThresholdRenderer(year) {
+            return {
+                type: "class-breaks",  // autocasts as new ClassBreaksRenderer()
+                valueExpression: `$feature.yrs_LtE_0_2_${year} / ${year}`,
+                backgroundFillSymbol: { type: "simple-fill", outline: { color: [0, 0, 0, 0], width: 0 } },  // autocasts as new SimpleFillSymbol()
+                classBreakInfos: [ // Esri Purple 1
+                    { minValue: 0.00, maxValue: 0.00, symbol: createSymbol("#E9C5EA"), label: "≤ 0%" },
+                    { minValue: 0.01, maxValue: 0.20, symbol: createSymbol("#DDA7ED"), label: "≤ 20%" },
+                    { minValue: 0.21, maxValue: 0.40, symbol: createSymbol("#CF8AEF"), label: "≤ 40%" },
+                    { minValue: 0.41, maxValue: 0.60, symbol: createSymbol("#C06AF0"), label: "≤ 60%" },
+                    { minValue: 0.61, maxValue: 0.80, symbol: createSymbol("#AF44F2"), label: "≤ 80%" },
+                    { minValue: 0.81, maxValue: 1.00, symbol: createSymbol("#9B1CF2"), label: "≤ 100%" }
+                ]
+            }
+        };
+
+        function updateSymbology() {
+            let select_SG_Element = document.querySelector("#select-situation-group");
+            let select_year_Element = document.querySelector("#select-year");
+            let select_statistic_Element = document.querySelector("#select-statistic");
+
+            let select_SG_value = select_SG_Element.value; // S07_G511, S08_G511, S07_G520, S08_G520
+            let select_year_value = select_year_Element.value; // 5, 10, 15
+            let select_statistic_value = select_statistic_Element.value; // mean, stdev, yrs_LtE_0_2
+
+            const mapView = document.getElementById("arcgis-map-element")
+            const mapViewMap = mapView.map
+            const allLayers = mapViewMap.allLayers.items
+
+            const s07g511_lyr = allLayers.filter(l => l.title == "S07_G511")[0];
+            const s08g511_lyr = allLayers.filter(l => l.title == "S08_G511")[0];
+
+            s07g511_lyr.visible = (select_SG_value == "S07_G511");
+            s08g511_lyr.visible = (select_SG_value == "S08_G511");
+
+            switch (select_statistic_value) {
+                case "mean":
+                    s07g511_lyr.renderer = meanRenderer(select_year_value);
+                    s08g511_lyr.renderer = meanRenderer(select_year_value);
+                    break;
+                case "stdev":
+                    s07g511_lyr.renderer = stdevRenderer(select_year_value);
+                    s08g511_lyr.renderer = stdevRenderer(select_year_value);
+                    break;
+                case "yrs_LtE_0_2":
+                    s07g511_lyr.renderer = lteThresholdRenderer(select_year_value);
+                    s08g511_lyr.renderer = lteThresholdRenderer(select_year_value);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    </script>
+</head>
+
+<body class="claro">
+    <div id="esri-map-container">
+        <arcgis-map id="arcgis-map-element" item-id="8c5bbd817e5342c2a46d7010dfc0c534">
+
+            <arcgis-legend position="bottom-left" />
+
+            <arcgis-layer-list position="bottom-right" />
+
+        </arcgis-map>
+    </div>
+    <div id="esri-colorinfoslider-container">
+        <div style="padding: 8px;">
+            <div id="title">
+                <h2>LDWF OSP Initiative #7</h2>
+            </div>
+            <div id="attSelection">
+                <b>Situation and Group:</b>
+                <select id="select-situation-group" onchange="updateSymbology();">
+                    <option value="S07_G511" selected>S07 G511</option>
+                    <option value="S08_G511">S08 G511</option>
+                    <option value="S07_G520">S07 G520</option>
+                    <option value="S08_G520">S08 G520</option>
+                </select><br><br>
+
+                <b>Year Span:</b>
+                <select id="select-year" onchange="updateSymbology();">
+                    <option value="5" selected>03-07</option>
+                    <option value="10">03-12</option>
+                    <option value="15">03-17</option>
+                </select><br><br>
+
+                <b>Statistic:</b>
+                <select id="select-statistic" onchange="updateSymbology();">
+                    <option value="mean" selected>Mean</option>
+                    <option value="stdev">Standard Deviation</option>
+                    <option value="yrs_LtE_0_2">Years Below 0.2 Threshold</option>
+                </select>
+            </div>
+        </div>
+        <div id="esri-colorinfoslider"><img src="img/busy-indicator.gif" id="spinner"></div>
+    </div>
+</body>
+
+<script>
+    const mapViewElement = document.getElementById("arcgis-map-element");
+
+    const observer = new MutationObserver((mutationList) => {
+        let spinnerElement = document.getElementById("spinner")
+        for (const mutation of mutationList) {
+            let attVal = mutation.target.getAttribute(mutation.attributeName)
+            switch (attVal) {
+                case "": // updating
+                    spinnerElement.style.visibility = "visible"
+                    break;
+                case null: // not updating
+                    spinnerElement.style.visibility = "hidden"
+                    break;
+                default:
+                    break;
+            }
+        }
+    });
+
+    observer.observe(mapViewElement, {
+        subtree: false,
+        attributeOldValue: true,
+        attributeFilter: ["updating"],
+    });
+</script>
+
+</html>
