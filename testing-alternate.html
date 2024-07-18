@@ -43,18 +43,24 @@
             bottom: 0;
             left: 0;
             background-color: var(--dark-bg-color);
-            color: var(--dark-text-color); 
+            color: var(--dark-text-color);
             height: 100%;
             width: 300px;
             border-top-right-radius: 8px;
             overflow-x: hidden;
         }
 
-        #spinner {
+        #attSelection-top {
+            height: 50%;
+        }
+
+        .spinner {
             visibility: hidden;
             position: relative;
             z-index: 98;
-            left: 130px;
+            left: 120px;
+            padding-top: 10px;
+            padding-bottom: 20px;
         }
 
         .btn {
@@ -74,8 +80,14 @@
             text-decoration: none;
         }
 
-        h2 {
+        h2,
+        h4 {
             text-align: center;
+        }
+
+        h4 {
+            margin: 0;
+            text-decoration: underline;
         }
     </style>
 
@@ -193,15 +205,15 @@
         };
 
         function updateSymbology() {
-            let select_SG_Element = document.querySelector("#select-situation-group");
-            let select_year_Element = document.querySelector("#select-year");
-            let select_statistic_Element = document.querySelector("#select-statistic");
+            let select_SG_Element = document.querySelector("#select-situation-group-top");
+            let select_year_Element = document.querySelector("#select-year-top");
+            let select_statistic_Element = document.querySelector("#select-statistic-top");
 
             let select_SG_value = select_SG_Element.value; // S07_G511, S08_G511, S07_G520, S08_G520
             let select_year_value = select_year_Element.value; // 5, 10, 15
             let select_statistic_value = select_statistic_Element.value; // mean, stdev, yrs_LtE_0_2
 
-            const mapView = document.getElementById("arcgis-map-element")
+            const mapView = document.getElementById("arcgis-map-element-top")
             const mapViewMap = mapView.map
             const allLayers = mapViewMap.allLayers.items
 
@@ -234,15 +246,17 @@
 
 <body class="claro">
     <div id="esri-map-container" class="esri-map-container-top">
-        <arcgis-map id="arcgis-map-element-top" class="arcgis-map-element-top" item-id="8c5bbd817e5342c2a46d7010dfc0c534">
+        <arcgis-map id="arcgis-map-element-top" class="arcgis-map-element-top"
+            item-id="8c5bbd817e5342c2a46d7010dfc0c534">
 
             <arcgis-legend position="bottom-left" />
 
             <arcgis-layer-list position="bottom-right" />
 
         </arcgis-map>
-        <arcgis-map id="arcgis-map-element-bottom" class="arcgis-map-element-bottom" item-id="8c5bbd817e5342c2a46d7010dfc0c534">
-            
+        <arcgis-map id="arcgis-map-element-bottom" class="arcgis-map-element-bottom"
+            item-id="8c5bbd817e5342c2a46d7010dfc0c534">
+
             <arcgis-legend position="bottom-left" />
 
             <arcgis-layer-list position="bottom-right" />
@@ -250,13 +264,14 @@
         </arcgis-map>
     </div>
     <div id="esri-colorinfoslider-container">
-        <div style="padding: 8px;">
+        <div style="padding: 8px; height: -webkit-fill-available;">
             <div id="title">
                 <h2>LDWF OSP Initiative #7</h2>
             </div>
-            <div id="attSelection">
+            <div id="attSelection-top">
+                <h4>Top View</h4>
                 <b>Situation and Group:</b>
-                <select id="select-situation-group" onchange="updateSymbology();">
+                <select id="select-situation-group-top" onchange="updateSymbology();">
                     <option value="S07_G511" selected>S07 G511</option>
                     <option value="S08_G511">S08 G511</option>
                     <option value="S07_G520">S07 G520</option>
@@ -264,29 +279,55 @@
                 </select><br><br>
 
                 <b>Year Span:</b>
-                <select id="select-year" onchange="updateSymbology();">
+                <select id="select-year-top" onchange="updateSymbology();">
                     <option value="5" selected>03-07</option>
                     <option value="10">03-12</option>
                     <option value="15">03-17</option>
                 </select><br><br>
 
                 <b>Statistic:</b>
-                <select id="select-statistic" onchange="updateSymbology();">
+                <select id="select-statistic-top" onchange="updateSymbology();">
                     <option value="mean" selected>Mean</option>
                     <option value="stdev">Standard Deviation</option>
                     <option value="yrs_LtE_0_2">Years Below 0.2 Threshold</option>
                 </select>
+                <div><img src="img/busy-indicator.gif" id="spinner-top" class="spinner"></div>
+            </div>
+            <div id="attSelection-bottom">
+                <h4>Bottom View</h4>
+                <b>Situation and Group:</b>
+                <select id="select-situation-group-bottom" onchange="updateSymbology();">
+                    <option value="S07_G511" selected>S07 G511</option>
+                    <option value="S08_G511">S08 G511</option>
+                    <option value="S07_G520">S07 G520</option>
+                    <option value="S08_G520">S08 G520</option>
+                </select><br><br>
+
+                <b>Year Span:</b>
+                <select id="select-year-bottom" onchange="updateSymbology();">
+                    <option value="5" selected>03-07</option>
+                    <option value="10">03-12</option>
+                    <option value="15">03-17</option>
+                </select><br><br>
+
+                <b>Statistic:</b>
+                <select id="select-statistic-bottom" onchange="updateSymbology();">
+                    <option value="mean" selected>Mean</option>
+                    <option value="stdev">Standard Deviation</option>
+                    <option value="yrs_LtE_0_2">Years Below 0.2 Threshold</option>
+                </select>
+                <div><img src="img/busy-indicator.gif" id="spinner-bottom" class="spinner"></div>
             </div>
         </div>
-        <div id="esri-colorinfoslider"><img src="img/busy-indicator.gif" id="spinner"></div>
+
     </div>
 </body>
 
 <script>
-    const mapViewElement = document.getElementById("arcgis-map-element");
+    const mapViewElement = document.getElementById("arcgis-map-element-top");
 
     const observer = new MutationObserver((mutationList) => {
-        let spinnerElement = document.getElementById("spinner")
+        let spinnerElement = document.getElementById("spinner-top")
         for (const mutation of mutationList) {
             let attVal = mutation.target.getAttribute(mutation.attributeName)
             switch (attVal) {
