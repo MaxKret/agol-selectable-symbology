@@ -365,7 +365,7 @@
 </body>
 
 <script>
-    // TODO fix extent matching
+    // TODO fix jumpy extent matching
     const mapViewElement_top = document.getElementById("arcgis-map-element-top");
     const mapViewElement_bottom = document.getElementById("arcgis-map-element-bottom");
 
@@ -418,20 +418,6 @@
         attributeOldValue: true,
         attributeFilter: ["updating"],
     });
-
-
-    // const observer = new MutationObserver((mutationList) => {
-    //     for (const mutation of mutationList) {
-    //         let attVal = mutation.target.getAttribute(mutation.attributeName)
-    //         console.log(`The ${mutation.attributeName} attribute was modified from "${mutation.oldValue}" to "${attVal}" for ${mutation.target.nodeName}.`);
-    //         console.log("mapViewElement_top.view.extent: ",mapViewElement_top.view.extent)
-    //     }
-    // });
-    // observer.observe(mapViewElement_top, {
-    //     subtree: false,
-    //     attributeOldValue: true,
-    //     // attributeFilter: ["updating"],
-    // });
 </script>
 
 </html>
