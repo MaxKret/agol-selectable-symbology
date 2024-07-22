@@ -380,8 +380,10 @@
                     break;
                 case null: // not updating
                     spinnerElement.style.visibility = "hidden"
+                    mapViewElement_bottom.view.extent = mapViewElement_top.view.extent;
                     break;
                 default:
+                    mapViewElement_bottom.view.extent = mapViewElement_top.view.extent;
                     break;
             }
         }
@@ -393,11 +395,14 @@
             switch (attVal) {
                 case "": // updating
                     spinnerElement.style.visibility = "visible"
+                    mapViewElement_top.view.extent = mapViewElement_bottom.view.extent;
                     break;
                 case null: // not updating
                     spinnerElement.style.visibility = "hidden"
+                    mapViewElement_top.view.extent = mapViewElement_bottom.view.extent;
                     break;
                 default:
+                    mapViewElement_top.view.extent = mapViewElement_bottom.view.extent;
                     break;
             }
         }
