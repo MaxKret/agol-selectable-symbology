@@ -205,36 +205,77 @@
         };
 
         function updateSymbology() {
-            let select_SG_Element = document.querySelector("#select-situation-group-top");
-            let select_year_Element = document.querySelector("#select-year-top");
-            let select_statistic_Element = document.querySelector("#select-statistic-top");
+            let select_SG_Element_top = document.querySelector("#select-situation-group-top");
+            let select_year_Element_top = document.querySelector("#select-year-top");
+            let select_statistic_Element_top = document.querySelector("#select-statistic-top");
 
-            let select_SG_value = select_SG_Element.value; // S07_G511, S08_G511, S07_G520, S08_G520
-            let select_year_value = select_year_Element.value; // 5, 10, 15
-            let select_statistic_value = select_statistic_Element.value; // mean, stdev, yrs_LtE_0_2
+            let select_SG_Element_bottom = document.querySelector("#select-situation-group-bottom");
+            let select_year_Element_bottom = document.querySelector("#select-year-bottom");
+            let select_statistic_Element_bottom = document.querySelector("#select-statistic-bottom");
 
-            const mapView = document.getElementById("arcgis-map-element-top")
-            const mapViewMap = mapView.map
-            const allLayers = mapViewMap.allLayers.items
 
-            const s07g511_lyr = allLayers.filter(l => l.title == "S07_G511")[0];
-            const s08g511_lyr = allLayers.filter(l => l.title == "S08_G511")[0];
+            let select_SG_value_top = select_SG_Element_top.value; // S07_G511, S08_G511, S07_G520, S08_G520
+            let select_year_value_top = select_year_Element_top.value; // 5, 10, 15
+            let select_statistic_value_top = select_statistic_Element_top.value; // mean, stdev, yrs_LtE_0_2
+            
+            let select_SG_value_bottom = select_SG_Element_bottom.value; // S07_G511, S08_G511, S07_G520, S08_G520
+            let select_year_value_bottom = select_year_Element_bottom.value; // 5, 10, 15
+            let select_statistic_value_bottom = select_statistic_Element_bottom.value; // mean, stdev, yrs_LtE_0_2
+            
 
-            s07g511_lyr.visible = (select_SG_value == "S07_G511");
-            s08g511_lyr.visible = (select_SG_value == "S08_G511");
+            const mapView_top = document.getElementById("arcgis-map-element-top")
+            const mapViewMap_top = mapView_top.map
+            const allLayers_top = mapViewMap_top.allLayers.items
+            
+            const mapView_bottom = document.getElementById("arcgis-map-element-bottom")
+            const mapViewMap_bottom = mapView_bottom.map
+            const allLayers_bottom = mapViewMap_bottom.allLayers.items
 
-            switch (select_statistic_value) {
+
+            const s07g511_lyr_top = allLayers_top.filter(l => l.title == "S07_G511")[0];
+            const s08g511_lyr_top = allLayers_top.filter(l => l.title == "S08_G511")[0];
+            
+            const s07g511_lyr_bottom = allLayers_bottom.filter(l => l.title == "S07_G511")[0];
+            const s08g511_lyr_bottom = allLayers_bottom.filter(l => l.title == "S08_G511")[0];
+
+
+            s07g511_lyr_top.visible = (select_SG_value_top == "S07_G511");
+            s08g511_lyr_top.visible = (select_SG_value_top == "S08_G511");
+            
+            s07g511_lyr_bottom.visible = (select_SG_value_bottom == "S07_G511");
+            s08g511_lyr_bottom.visible = (select_SG_value_bottom == "S08_G511");
+
+
+            switch (select_statistic_value_top) {
                 case "mean":
-                    s07g511_lyr.renderer = meanRenderer(select_year_value);
-                    s08g511_lyr.renderer = meanRenderer(select_year_value);
+                    s07g511_lyr_top.renderer = meanRenderer(select_year_value_top);
+                    s08g511_lyr_top.renderer = meanRenderer(select_year_value_top);
                     break;
                 case "stdev":
-                    s07g511_lyr.renderer = stdevRenderer(select_year_value);
-                    s08g511_lyr.renderer = stdevRenderer(select_year_value);
+                    s07g511_lyr_top.renderer = stdevRenderer(select_year_value_top);
+                    s08g511_lyr_top.renderer = stdevRenderer(select_year_value_top);
                     break;
                 case "yrs_LtE_0_2":
-                    s07g511_lyr.renderer = lteThresholdRenderer(select_year_value);
-                    s08g511_lyr.renderer = lteThresholdRenderer(select_year_value);
+                    s07g511_lyr_top.renderer = lteThresholdRenderer(select_year_value_top);
+                    s08g511_lyr_top.renderer = lteThresholdRenderer(select_year_value_top);
+                    break;
+
+                default:
+                    break;
+            }
+            
+            switch (select_statistic_value_bottom) {
+                case "mean":
+                    s07g511_lyr_bottom.renderer = meanRenderer(select_year_value_bottom);
+                    s08g511_lyr_bottom.renderer = meanRenderer(select_year_value_bottom);
+                    break;
+                case "stdev":
+                    s07g511_lyr_bottom.renderer = stdevRenderer(select_year_value_bottom);
+                    s08g511_lyr_bottom.renderer = stdevRenderer(select_year_value_bottom);
+                    break;
+                case "yrs_LtE_0_2":
+                    s07g511_lyr_bottom.renderer = lteThresholdRenderer(select_year_value_bottom);
+                    s08g511_lyr_bottom.renderer = lteThresholdRenderer(select_year_value_bottom);
                     break;
 
                 default:
@@ -324,10 +365,29 @@
 </body>
 
 <script>
-    const mapViewElement = document.getElementById("arcgis-map-element-top");
+    // TODO fix extent matching
+    const mapViewElement_top = document.getElementById("arcgis-map-element-top");
+    const mapViewElement_bottom = document.getElementById("arcgis-map-element-bottom");
 
-    const observer = new MutationObserver((mutationList) => {
+    const observer_top = new MutationObserver((mutationList) => {
         let spinnerElement = document.getElementById("spinner-top")
+        for (const mutation of mutationList) {
+            let attVal = mutation.target.getAttribute(mutation.attributeName)
+            switch (attVal) {
+                case "": // updating
+                    spinnerElement.style.visibility = "visible"
+                    mapViewElement_bottom.view.extent = mapViewElement_top.view.extent;
+                    break;
+                case null: // not updating
+                    spinnerElement.style.visibility = "hidden"
+                    break;
+                default:
+                    break;
+            }
+        }
+    });
+    const observer_bottom = new MutationObserver((mutationList) => {
+        let spinnerElement = document.getElementById("spinner-bottom")
         for (const mutation of mutationList) {
             let attVal = mutation.target.getAttribute(mutation.attributeName)
             switch (attVal) {
@@ -343,11 +403,30 @@
         }
     });
 
-    observer.observe(mapViewElement, {
+    observer_top.observe(mapViewElement_top, {
         subtree: false,
         attributeOldValue: true,
         attributeFilter: ["updating"],
     });
+    observer_bottom.observe(mapViewElement_bottom, {
+        subtree: false,
+        attributeOldValue: true,
+        attributeFilter: ["updating"],
+    });
+
+
+    // const observer = new MutationObserver((mutationList) => {
+    //     for (const mutation of mutationList) {
+    //         let attVal = mutation.target.getAttribute(mutation.attributeName)
+    //         console.log(`The ${mutation.attributeName} attribute was modified from "${mutation.oldValue}" to "${attVal}" for ${mutation.target.nodeName}.`);
+    //         console.log("mapViewElement_top.view.extent: ",mapViewElement_top.view.extent)
+    //     }
+    // });
+    // observer.observe(mapViewElement_top, {
+    //     subtree: false,
+    //     attributeOldValue: true,
+    //     // attributeFilter: ["updating"],
+    // });
 </script>
 
 </html>
