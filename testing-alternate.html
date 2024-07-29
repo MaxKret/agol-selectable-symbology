@@ -234,30 +234,44 @@
 
             const s07g511_lyr_top = allLayers_top.filter(l => l.title == "S07_G511")[0];
             const s08g511_lyr_top = allLayers_top.filter(l => l.title == "S08_G511")[0];
+            const s07g520_lyr_top = allLayers_top.filter(l => l.title == "S07_G520")[0];
+            const s08g520_lyr_top = allLayers_top.filter(l => l.title == "S08_G520")[0];
             
             const s07g511_lyr_bottom = allLayers_bottom.filter(l => l.title == "S07_G511")[0];
             const s08g511_lyr_bottom = allLayers_bottom.filter(l => l.title == "S08_G511")[0];
+            const s07g520_lyr_bottom = allLayers_bottom.filter(l => l.title == "S07_G520")[0];
+            const s08g520_lyr_bottom = allLayers_bottom.filter(l => l.title == "S08_G520")[0];
 
 
             s07g511_lyr_top.visible = (select_SG_value_top == "S07_G511");
             s08g511_lyr_top.visible = (select_SG_value_top == "S08_G511");
+            s07g520_lyr_top.visible = (select_SG_value_top == "S07_G520");
+            s08g520_lyr_top.visible = (select_SG_value_top == "S08_G520");
             
             s07g511_lyr_bottom.visible = (select_SG_value_bottom == "S07_G511");
             s08g511_lyr_bottom.visible = (select_SG_value_bottom == "S08_G511");
+            s07g520_lyr_bottom.visible = (select_SG_value_bottom == "S07_G520");
+            s08g520_lyr_bottom.visible = (select_SG_value_bottom == "S08_G520");
 
 
             switch (select_statistic_value_top) {
                 case "mean":
                     s07g511_lyr_top.renderer = meanRenderer(select_year_value_top);
                     s08g511_lyr_top.renderer = meanRenderer(select_year_value_top);
+                    s07g520_lyr_top.renderer = meanRenderer(select_year_value_top);
+                    s08g520_lyr_top.renderer = meanRenderer(select_year_value_top);
                     break;
                 case "stdev":
                     s07g511_lyr_top.renderer = stdevRenderer(select_year_value_top);
                     s08g511_lyr_top.renderer = stdevRenderer(select_year_value_top);
+                    s07g520_lyr_top.renderer = stdevRenderer(select_year_value_top);
+                    s08g520_lyr_top.renderer = stdevRenderer(select_year_value_top);
                     break;
                 case "yrs_LtE_0_2":
                     s07g511_lyr_top.renderer = lteThresholdRenderer(select_year_value_top);
                     s08g511_lyr_top.renderer = lteThresholdRenderer(select_year_value_top);
+                    s07g520_lyr_top.renderer = lteThresholdRenderer(select_year_value_top);
+                    s08g520_lyr_top.renderer = lteThresholdRenderer(select_year_value_top);
                     break;
 
                 default:
@@ -268,14 +282,20 @@
                 case "mean":
                     s07g511_lyr_bottom.renderer = meanRenderer(select_year_value_bottom);
                     s08g511_lyr_bottom.renderer = meanRenderer(select_year_value_bottom);
+                    s07g520_lyr_bottom.renderer = meanRenderer(select_year_value_bottom);
+                    s08g520_lyr_bottom.renderer = meanRenderer(select_year_value_bottom);
                     break;
                 case "stdev":
                     s07g511_lyr_bottom.renderer = stdevRenderer(select_year_value_bottom);
                     s08g511_lyr_bottom.renderer = stdevRenderer(select_year_value_bottom);
+                    s07g520_lyr_bottom.renderer = stdevRenderer(select_year_value_bottom);
+                    s08g520_lyr_bottom.renderer = stdevRenderer(select_year_value_bottom);
                     break;
                 case "yrs_LtE_0_2":
                     s07g511_lyr_bottom.renderer = lteThresholdRenderer(select_year_value_bottom);
                     s08g511_lyr_bottom.renderer = lteThresholdRenderer(select_year_value_bottom);
+                    s07g520_lyr_bottom.renderer = lteThresholdRenderer(select_year_value_bottom);
+                    s08g520_lyr_bottom.renderer = lteThresholdRenderer(select_year_value_bottom);
                     break;
 
                 default:
@@ -294,6 +314,8 @@
 
             <arcgis-layer-list position="bottom-right" />
 
+            <arcgis-home position="top-left" />
+
         </arcgis-map>
         <arcgis-map id="arcgis-map-element-bottom" class="arcgis-map-element-bottom"
             item-id="8c5bbd817e5342c2a46d7010dfc0c534">
@@ -301,6 +323,8 @@
             <arcgis-legend position="bottom-left" />
 
             <arcgis-layer-list position="bottom-right" />
+
+            <arcgis-home position="top-left" />
 
         </arcgis-map>
     </div>
