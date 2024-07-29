@@ -172,16 +172,16 @@
             let select_SG_value_top = select_SG_Element_top.value; // S07_G511, S08_G511, S07_G520, S08_G520
             let select_year_value_top = select_year_Element_top.value; // 5, 10, 15
             let select_statistic_value_top = select_statistic_Element_top.value; // mean, stdev, yrs_LtE_0_2
-
+            
             let select_SG_value_bottom = select_SG_Element_bottom.value; // S07_G511, S08_G511, S07_G520, S08_G520
             let select_year_value_bottom = select_year_Element_bottom.value; // 5, 10, 15
             let select_statistic_value_bottom = select_statistic_Element_bottom.value; // mean, stdev, yrs_LtE_0_2
-
+            
 
             const mapView_top = document.getElementById("arcgis-map-element-top")
             const mapViewMap_top = mapView_top.map
             const allLayers_top = mapViewMap_top.allLayers.items
-
+            
             const mapView_bottom = document.getElementById("arcgis-map-element-bottom")
             const mapViewMap_bottom = mapView_bottom.map
             const allLayers_bottom = mapViewMap_bottom.allLayers.items
@@ -189,48 +189,68 @@
 
             const s07g511_lyr_top = allLayers_top.filter(l => l.title == "S07_G511")[0];
             const s08g511_lyr_top = allLayers_top.filter(l => l.title == "S08_G511")[0];
-
+            const s07g520_lyr_top = allLayers_top.filter(l => l.title == "S07_G520")[0];
+            const s08g520_lyr_top = allLayers_top.filter(l => l.title == "S08_G520")[0];
+            
             const s07g511_lyr_bottom = allLayers_bottom.filter(l => l.title == "S07_G511")[0];
             const s08g511_lyr_bottom = allLayers_bottom.filter(l => l.title == "S08_G511")[0];
+            const s07g520_lyr_bottom = allLayers_bottom.filter(l => l.title == "S07_G520")[0];
+            const s08g520_lyr_bottom = allLayers_bottom.filter(l => l.title == "S08_G520")[0];
 
 
             s07g511_lyr_top.visible = (select_SG_value_top == "S07_G511");
             s08g511_lyr_top.visible = (select_SG_value_top == "S08_G511");
-
+            s07g520_lyr_top.visible = (select_SG_value_top == "S07_G520");
+            s08g520_lyr_top.visible = (select_SG_value_top == "S08_G520");
+            
             s07g511_lyr_bottom.visible = (select_SG_value_bottom == "S07_G511");
             s08g511_lyr_bottom.visible = (select_SG_value_bottom == "S08_G511");
+            s07g520_lyr_bottom.visible = (select_SG_value_bottom == "S07_G520");
+            s08g520_lyr_bottom.visible = (select_SG_value_bottom == "S08_G520");
 
 
             switch (select_statistic_value_top) {
                 case "mean":
                     s07g511_lyr_top.renderer = meanRenderer(select_year_value_top);
                     s08g511_lyr_top.renderer = meanRenderer(select_year_value_top);
+                    s07g520_lyr_top.renderer = meanRenderer(select_year_value_top);
+                    s08g520_lyr_top.renderer = meanRenderer(select_year_value_top);
                     break;
                 case "stdev":
                     s07g511_lyr_top.renderer = stdevRenderer(select_year_value_top);
                     s08g511_lyr_top.renderer = stdevRenderer(select_year_value_top);
+                    s07g520_lyr_top.renderer = stdevRenderer(select_year_value_top);
+                    s08g520_lyr_top.renderer = stdevRenderer(select_year_value_top);
                     break;
                 case "yrs_LtE_0_2":
                     s07g511_lyr_top.renderer = lteThresholdRenderer(select_year_value_top);
                     s08g511_lyr_top.renderer = lteThresholdRenderer(select_year_value_top);
+                    s07g520_lyr_top.renderer = lteThresholdRenderer(select_year_value_top);
+                    s08g520_lyr_top.renderer = lteThresholdRenderer(select_year_value_top);
                     break;
 
                 default:
                     break;
             }
-
+            
             switch (select_statistic_value_bottom) {
                 case "mean":
                     s07g511_lyr_bottom.renderer = meanRenderer(select_year_value_bottom);
                     s08g511_lyr_bottom.renderer = meanRenderer(select_year_value_bottom);
+                    s07g520_lyr_bottom.renderer = meanRenderer(select_year_value_bottom);
+                    s08g520_lyr_bottom.renderer = meanRenderer(select_year_value_bottom);
                     break;
                 case "stdev":
                     s07g511_lyr_bottom.renderer = stdevRenderer(select_year_value_bottom);
                     s08g511_lyr_bottom.renderer = stdevRenderer(select_year_value_bottom);
+                    s07g520_lyr_bottom.renderer = stdevRenderer(select_year_value_bottom);
+                    s08g520_lyr_bottom.renderer = stdevRenderer(select_year_value_bottom);
                     break;
                 case "yrs_LtE_0_2":
                     s07g511_lyr_bottom.renderer = lteThresholdRenderer(select_year_value_bottom);
                     s08g511_lyr_bottom.renderer = lteThresholdRenderer(select_year_value_bottom);
+                    s07g520_lyr_bottom.renderer = lteThresholdRenderer(select_year_value_bottom);
+                    s08g520_lyr_bottom.renderer = lteThresholdRenderer(select_year_value_bottom);
                     break;
 
                 default:
